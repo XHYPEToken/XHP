@@ -15,8 +15,8 @@ contract XHype is ERC20, Ownable {
     uint256 public liquidityFeeOnBuy;
     uint256 public liquidityFeeOnSell;
 
-    uint256 public rewardFeeOnBuy;
-    uint256 public rewardFeeOnSell;
+    uint256 public rewardFeeOnBuy; //OK
+    uint256 public rewardFeeOnSell; //OK
 
     uint256 public marketingFeeOnBuy;
     uint256 public marketingFeeOnSell;
@@ -25,7 +25,7 @@ contract XHype is ERC20, Ownable {
     uint256 public buybackFeeOnSell;
 
     bool public salaryFeeAvailable;
-    uint256 public salaryFeeOnBuy;
+    uint256 public salaryFeeOnBuy; //NO
     uint256 public salaryFeeOnSell;
 
     bool public stakingFeeAvailable;
@@ -44,7 +44,7 @@ contract XHype is ERC20, Ownable {
     address public buybackCurrency;
     address public salaryCurrency;
 
-    bool public walletToWalletTransferWithoutFee;
+    bool public walletToWalletTransferWithoutFee; //Se va
 
     IUniswapV2Router02 public uniswapV2Router;
     address public uniswapV2Pair;

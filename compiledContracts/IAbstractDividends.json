@@ -1,0 +1,643 @@
+{
+  "contractName": "IAbstractDividends",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "by",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "dividendsDistributed",
+          "type": "uint256"
+        }
+      ],
+      "name": "DividendsDistributed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "by",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundsWithdrawn",
+          "type": "uint256"
+        }
+      ],
+      "name": "DividendsWithdrawn",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "withdrawableDividendsOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "withdrawnDividendsOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "cumulativeDividendsOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"by\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"dividendsDistributed\",\"type\":\"uint256\"}],\"name\":\"DividendsDistributed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"by\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"fundsWithdrawn\",\"type\":\"uint256\"}],\"name\":\"DividendsWithdrawn\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"cumulativeDividendsOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"withdrawableDividendsOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"withdrawnDividendsOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"events\":{\"DividendsDistributed(address,uint256)\":{\"details\":\"This event emits when new funds are distributed\",\"params\":{\"by\":\"the address of the sender who distributed funds\",\"dividendsDistributed\":\"the amount of funds received for distribution\"}},\"DividendsWithdrawn(address,uint256)\":{\"details\":\"This event emits when distributed funds are withdrawn by a token holder.\",\"params\":{\"by\":\"the address of the receiver of funds\",\"fundsWithdrawn\":\"the amount of funds that were withdrawn\"}}},\"kind\":\"dev\",\"methods\":{\"cumulativeDividendsOf(address)\":{\"details\":\"View the amount of funds that an address has earned in total. accumulativeFundsOf(account) = withdrawableDividendsOf(account) + withdrawnDividendsOf(account) = (pointsPerShare * balanceOf(account) + pointsCorrection[account]) / POINTS_MULTIPLIER\",\"params\":{\"account\":\"The address of a token holder.\"},\"returns\":{\"_0\":\"The amount of funds that `account` has earned in total.\"}},\"withdrawableDividendsOf(address)\":{\"details\":\"Returns the total amount of dividends a given address is able to withdraw.\",\"params\":{\"account\":\"Address of a dividend recipient\"},\"returns\":{\"_0\":\"A uint256 representing the dividends `account` can withdraw\"}},\"withdrawnDividendsOf(address)\":{\"details\":\"View the amount of funds that an address has withdrawn.\",\"params\":{\"account\":\"The address of a token holder.\"},\"returns\":{\"_0\":\"The amount of funds that `account` has withdrawn.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/interfaces/IAbstractDividends.sol\":\"IAbstractDividends\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/src/interfaces/IAbstractDividends.sol\":{\"keccak256\":\"0xe7c1298dd9d0c6fcd31ec58861fbb4bdb0b1c3c4aa499524e12ae17f669467a9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://0a80ee59d6b87f3d1b6d93d1d2bb3ad35bbb6e63e035bb31d496732352e6cbcd\",\"dweb:/ipfs/QmWSmkJ7axBRx6iwcwg9NCSFB7Pu2cXHdUZs9SetH9VX7Q\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.19;\n\n\ninterface IAbstractDividends {\n\t/**\n\t * @dev Returns the total amount of dividends a given address is able to withdraw.\n\t * @param account Address of a dividend recipient\n\t * @return A uint256 representing the dividends `account` can withdraw\n\t */\n\tfunction withdrawableDividendsOf(address account) external view returns (uint256);\n\n  /**\n\t * @dev View the amount of funds that an address has withdrawn.\n\t * @param account The address of a token holder.\n\t * @return The amount of funds that `account` has withdrawn.\n\t */\n\tfunction withdrawnDividendsOf(address account) external view returns (uint256);\n\n\t/**\n\t * @dev View the amount of funds that an address has earned in total.\n\t * accumulativeFundsOf(account) = withdrawableDividendsOf(account) + withdrawnDividendsOf(account)\n\t * = (pointsPerShare * balanceOf(account) + pointsCorrection[account]) / POINTS_MULTIPLIER\n\t * @param account The address of a token holder.\n\t * @return The amount of funds that `account` has earned in total.\n\t */\n\tfunction cumulativeDividendsOf(address account) external view returns (uint256);\n\n\t/**\n\t * @dev This event emits when new funds are distributed\n\t * @param by the address of the sender who distributed funds\n\t * @param dividendsDistributed the amount of funds received for distribution\n\t */\n\tevent DividendsDistributed(address indexed by, uint256 dividendsDistributed);\n\n\t/**\n\t * @dev This event emits when distributed funds are withdrawn by a token holder.\n\t * @param by the address of the receiver of funds\n\t * @param fundsWithdrawn the amount of funds that were withdrawn\n\t */\n\tevent DividendsWithdrawn(address indexed by, uint256 fundsWithdrawn);\n}",
+  "sourcePath": "/Users/glenci/Xhype/src/interfaces/IAbstractDividends.sol",
+  "ast": {
+    "absolutePath": "project:/src/interfaces/IAbstractDividends.sol",
+    "exportedSymbols": {
+      "IAbstractDividends": [
+        9240
+      ]
+    },
+    "id": 9241,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 9201,
+        "literals": [
+          "solidity",
+          "0.8",
+          ".19"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:19"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IAbstractDividends",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 9240,
+        "linearizedBaseContracts": [
+          9240
+        ],
+        "name": "IAbstractDividends",
+        "nameLocation": "68:18:19",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "documentation": {
+              "id": 9202,
+              "nodeType": "StructuredDocumentation",
+              "src": "90:215:19",
+              "text": " @dev Returns the total amount of dividends a given address is able to withdraw.\n @param account Address of a dividend recipient\n @return A uint256 representing the dividends `account` can withdraw"
+            },
+            "functionSelector": "b131e610",
+            "id": 9209,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawableDividendsOf",
+            "nameLocation": "316:23:19",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9205,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9204,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "348:7:19",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9209,
+                  "src": "340:15:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 9203,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "340:7:19",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "339:17:19"
+            },
+            "returnParameters": {
+              "id": 9208,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9207,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9209,
+                  "src": "380:7:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9206,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "380:7:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "379:9:19"
+            },
+            "scope": 9240,
+            "src": "307:82:19",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 9210,
+              "nodeType": "StructuredDocumentation",
+              "src": "393:185:19",
+              "text": " @dev View the amount of funds that an address has withdrawn.\n @param account The address of a token holder.\n @return The amount of funds that `account` has withdrawn."
+            },
+            "functionSelector": "53f83ad7",
+            "id": 9217,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawnDividendsOf",
+            "nameLocation": "589:20:19",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9213,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9212,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "618:7:19",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9217,
+                  "src": "610:15:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 9211,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "610:7:19",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "609:17:19"
+            },
+            "returnParameters": {
+              "id": 9216,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9215,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9217,
+                  "src": "650:7:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9214,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "650:7:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "649:9:19"
+            },
+            "scope": 9240,
+            "src": "580:79:19",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 9218,
+              "nodeType": "StructuredDocumentation",
+              "src": "662:389:19",
+              "text": " @dev View the amount of funds that an address has earned in total.\n accumulativeFundsOf(account) = withdrawableDividendsOf(account) + withdrawnDividendsOf(account)\n = (pointsPerShare * balanceOf(account) + pointsCorrection[account]) / POINTS_MULTIPLIER\n @param account The address of a token holder.\n @return The amount of funds that `account` has earned in total."
+            },
+            "functionSelector": "1a60b63d",
+            "id": 9225,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "cumulativeDividendsOf",
+            "nameLocation": "1062:21:19",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9221,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9220,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "1092:7:19",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9225,
+                  "src": "1084:15:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 9219,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1084:7:19",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1083:17:19"
+            },
+            "returnParameters": {
+              "id": 9224,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9223,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9225,
+                  "src": "1124:7:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9222,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1124:7:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1123:9:19"
+            },
+            "scope": 9240,
+            "src": "1053:80:19",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 9226,
+              "nodeType": "StructuredDocumentation",
+              "src": "1136:205:19",
+              "text": " @dev This event emits when new funds are distributed\n @param by the address of the sender who distributed funds\n @param dividendsDistributed the amount of funds received for distribution"
+            },
+            "eventSelector": "a493a9229478c3fcd73f66d2cdeb7f94fd0f341da924d1054236d78454116511",
+            "id": 9232,
+            "name": "DividendsDistributed",
+            "nameLocation": "1349:20:19",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 9231,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9228,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "by",
+                  "nameLocation": "1386:2:19",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9232,
+                  "src": "1370:18:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 9227,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1370:7:19",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 9230,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "dividendsDistributed",
+                  "nameLocation": "1398:20:19",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9232,
+                  "src": "1390:28:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9229,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1390:7:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1369:50:19"
+            },
+            "src": "1343:77:19"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 9233,
+              "nodeType": "StructuredDocumentation",
+              "src": "1423:207:19",
+              "text": " @dev This event emits when distributed funds are withdrawn by a token holder.\n @param by the address of the receiver of funds\n @param fundsWithdrawn the amount of funds that were withdrawn"
+            },
+            "eventSelector": "08d688a92fc311df9b853769e8a99b320411042a86f106fd29e7f21ee06e79da",
+            "id": 9239,
+            "name": "DividendsWithdrawn",
+            "nameLocation": "1638:18:19",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 9238,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9235,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "by",
+                  "nameLocation": "1673:2:19",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9239,
+                  "src": "1657:18:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 9234,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1657:7:19",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 9237,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "fundsWithdrawn",
+                  "nameLocation": "1685:14:19",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9239,
+                  "src": "1677:22:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9236,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1677:7:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1656:44:19"
+            },
+            "src": "1632:69:19"
+          }
+        ],
+        "scope": 9241,
+        "src": "58:1645:19",
+        "usedErrors": []
+      }
+    ],
+    "src": "32:1671:19"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.19+commit.7dd6d404.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.10",
+  "updatedAt": "2023-05-05T21:35:45.819Z",
+  "devdoc": {
+    "events": {
+      "DividendsDistributed(address,uint256)": {
+        "details": "This event emits when new funds are distributed",
+        "params": {
+          "by": "the address of the sender who distributed funds",
+          "dividendsDistributed": "the amount of funds received for distribution"
+        }
+      },
+      "DividendsWithdrawn(address,uint256)": {
+        "details": "This event emits when distributed funds are withdrawn by a token holder.",
+        "params": {
+          "by": "the address of the receiver of funds",
+          "fundsWithdrawn": "the amount of funds that were withdrawn"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "cumulativeDividendsOf(address)": {
+        "details": "View the amount of funds that an address has earned in total. accumulativeFundsOf(account) = withdrawableDividendsOf(account) + withdrawnDividendsOf(account) = (pointsPerShare * balanceOf(account) + pointsCorrection[account]) / POINTS_MULTIPLIER",
+        "params": {
+          "account": "The address of a token holder."
+        },
+        "returns": {
+          "_0": "The amount of funds that `account` has earned in total."
+        }
+      },
+      "withdrawableDividendsOf(address)": {
+        "details": "Returns the total amount of dividends a given address is able to withdraw.",
+        "params": {
+          "account": "Address of a dividend recipient"
+        },
+        "returns": {
+          "_0": "A uint256 representing the dividends `account` can withdraw"
+        }
+      },
+      "withdrawnDividendsOf(address)": {
+        "details": "View the amount of funds that an address has withdrawn.",
+        "params": {
+          "account": "The address of a token holder."
+        },
+        "returns": {
+          "_0": "The amount of funds that `account` has withdrawn."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

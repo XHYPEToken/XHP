@@ -1,0 +1,3832 @@
+{
+  "contractName": "AbstractDividends",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "by",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "dividendsDistributed",
+          "type": "uint256"
+        }
+      ],
+      "name": "DividendsDistributed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "by",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundsWithdrawn",
+          "type": "uint256"
+        }
+      ],
+      "name": "DividendsWithdrawn",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "pointsPerShare",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "withdrawableDividendsOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "withdrawnDividendsOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "cumulativeDividendsOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"by\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"dividendsDistributed\",\"type\":\"uint256\"}],\"name\":\"DividendsDistributed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"by\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"fundsWithdrawn\",\"type\":\"uint256\"}],\"name\":\"DividendsWithdrawn\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"cumulativeDividendsOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pointsPerShare\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"withdrawableDividendsOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"withdrawnDividendsOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Many functions in this contract were taken from this repository: https://github.com/atpar/funds-distribution-token/blob/master/contracts/FundsDistributionToken.sol which is an example implementation of ERC 2222, the draft for which can be found at https://github.com/atpar/funds-distribution-token/blob/master/EIP-DRAFT.md This contract has been substantially modified from the original and does not comply with ERC 2222. Many functions were renamed as \\\"dividends\\\" rather than \\\"funds\\\" and the core functionality was separated into this abstract contract which can be inherited by anything tracking ownership of dividend shares.\",\"events\":{\"DividendsDistributed(address,uint256)\":{\"details\":\"This event emits when new funds are distributed\",\"params\":{\"by\":\"the address of the sender who distributed funds\",\"dividendsDistributed\":\"the amount of funds received for distribution\"}},\"DividendsWithdrawn(address,uint256)\":{\"details\":\"This event emits when distributed funds are withdrawn by a token holder.\",\"params\":{\"by\":\"the address of the receiver of funds\",\"fundsWithdrawn\":\"the amount of funds that were withdrawn\"}}},\"kind\":\"dev\",\"methods\":{\"cumulativeDividendsOf(address)\":{\"details\":\"accumulativeFundsOf(account) = withdrawableDividendsOf(account) + withdrawnDividendsOf(account) = (pointsPerShare * balanceOf(account) + pointsCorrection[account]) / POINTS_MULTIPLIER\",\"params\":{\"account\":\"The address of a token holder.\"},\"returns\":{\"_0\":\"The amount of dividends that `account` has earned in total.\"}},\"withdrawableDividendsOf(address)\":{\"details\":\"Returns the total amount of dividends a given address is able to withdraw.\",\"params\":{\"account\":\"Address of a dividend recipient\"},\"returns\":{\"_0\":\"A uint256 representing the dividends `account` can withdraw\"}},\"withdrawnDividendsOf(address)\":{\"params\":{\"account\":\"The address of a token holder.\"},\"returns\":{\"_0\":\"The amount of dividends that `account` has withdrawn.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"cumulativeDividendsOf(address)\":{\"notice\":\"View the amount of dividends that an address has earned in total.\"},\"withdrawnDividendsOf(address)\":{\"notice\":\"View the amount of dividends that an address has withdrawn.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/AbstractDividends.sol\":\"AbstractDividends\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/utils/math/SignedSafeMath.sol\":{\"keccak256\":\"0x62f53f262fabbbc6d8ab49488d8fce36370351aff2b8d3898d499d68995a71c2\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://efd599513c2f313a3f5e9536beb2b80a0d2b3dd34202c174a707d81b7dc751ce\",\"dweb:/ipfs/QmdDiENVFSyWjfFskNLnViMH77DHg3oDthkSZk7dMzNNKB\"]},\"project:/src/AbstractDividends.sol\":{\"keccak256\":\"0x2c141a60966af932bcb23a186fbebcfcf86b7191abc04ae7750a98ed8a043a99\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1a065262d57ac2da12be744ce1a60783b12af7d79f5ca6c0cee63fa08318dccc\",\"dweb:/ipfs/QmXmHT1hQcogGQtRwyk3DzY4xQZbi6yaLMQ61aPQ2vRz46\"]},\"project:/src/interfaces/IAbstractDividends.sol\":{\"keccak256\":\"0xe7c1298dd9d0c6fcd31ec58861fbb4bdb0b1c3c4aa499524e12ae17f669467a9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://0a80ee59d6b87f3d1b6d93d1d2bb3ad35bbb6e63e035bb31d496732352e6cbcd\",\"dweb:/ipfs/QmWSmkJ7axBRx6iwcwg9NCSFB7Pu2cXHdUZs9SetH9VX7Q\"]},\"project:/src/libraries/LowGasSafeMath.sol\":{\"keccak256\":\"0x9d71ff635b1ed8d05645b58464b11d385fcf4b41e7ec3ceb80f39dc4ed0b575a\",\"license\":\"GPL-2.0-or-later\",\"urls\":[\"bzz-raw://704f91047675660081469485b30b9ee253e2525d0130e071489b4dfb25486983\",\"dweb:/ipfs/Qmf5KRmuYW5SuL1tVhynPmPs1dAaiFBaX7o66Gvp4mu66t\"]},\"project:/src/libraries/SafeCast.sol\":{\"keccak256\":\"0xb42a90292a8ac34dbca6d6f420d9ce3893d924bdca871a9fd87bd13d9a443b0e\",\"license\":\"GPL-2.0-or-later\",\"urls\":[\"bzz-raw://749500107b40b8b208d9270befd93d83a4dc9afc5426e3d48ec3e6ad9b478b02\",\"dweb:/ipfs/QmQm2Z9m29E9QDjwWZDURMjZivSyQn8kd2vgSuVfBuvvps\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.19;\n\nimport \"@openzeppelin/contracts/utils/math/SignedSafeMath.sol\";\nimport \"../src/libraries/LowGasSafeMath.sol\";\nimport \"../src/libraries/SafeCast.sol\";\nimport \"../src/interfaces/IAbstractDividends.sol\";\n\n/**\n * @dev Many functions in this contract were taken from this repository:\n * https://github.com/atpar/funds-distribution-token/blob/master/contracts/FundsDistributionToken.sol\n * which is an example implementation of ERC 2222, the draft for which can be found at\n * https://github.com/atpar/funds-distribution-token/blob/master/EIP-DRAFT.md\n *\n * This contract has been substantially modified from the original and does not comply with ERC 2222.\n * Many functions were renamed as \"dividends\" rather than \"funds\" and the core functionality was separated\n * into this abstract contract which can be inherited by anything tracking ownership of dividend shares.\n */\nabstract contract AbstractDividends is IAbstractDividends {\n  using LowGasSafeMath for uint256;\n  using SafeCast for uint128;\n  using SafeCast for uint256;\n  using SafeCast for int256;\n  using SignedSafeMath for int256;\n\n/* ========  Constants  ======== */\n  uint128 internal constant POINTS_MULTIPLIER = type(uint128).max;\n\n/* ========  Internal Function References  ======== */\n  function(address) view returns (uint256) private immutable getSharesOf;\n  function() view returns (uint256) private immutable getTotalShares;\n\n/* ========  Storage  ======== */\n  uint256 public pointsPerShare;\n  mapping(address => int256) internal pointsCorrection;\n  mapping(address => uint256) private withdrawnDividends;\n\n  constructor(\n    function(address) view returns (uint256) getSharesOf_,\n    function() view returns (uint256) getTotalShares_\n  ) {\n    getSharesOf = getSharesOf_;\n    getTotalShares = getTotalShares_;\n  }\n\n/* ========  Public View Functions  ======== */\n  /**\n   * @dev Returns the total amount of dividends a given address is able to withdraw.\n   * @param account Address of a dividend recipient\n   * @return A uint256 representing the dividends `account` can withdraw\n   */\n  function withdrawableDividendsOf(address account) public view override returns (uint256) {\n    return cumulativeDividendsOf(account).sub(withdrawnDividends[account]);\n  }\n\n  /**\n   * @notice View the amount of dividends that an address has withdrawn.\n   * @param account The address of a token holder.\n   * @return The amount of dividends that `account` has withdrawn.\n   */\n  function withdrawnDividendsOf(address account) public view override returns (uint256) {\n    return withdrawnDividends[account];\n  }\n\n  /**\n   * @notice View the amount of dividends that an address has earned in total.\n   * @dev accumulativeFundsOf(account) = withdrawableDividendsOf(account) + withdrawnDividendsOf(account)\n   * = (pointsPerShare * balanceOf(account) + pointsCorrection[account]) / POINTS_MULTIPLIER\n   * @param account The address of a token holder.\n   * @return The amount of dividends that `account` has earned in total.\n   */\n  function cumulativeDividendsOf(address account) public view override returns (uint256) {\n    return pointsPerShare\n      .mul(getSharesOf(account))\n      .toInt256()\n      .add(pointsCorrection[account])\n      .toUint256() / POINTS_MULTIPLIER;\n  }\n\n/* ========  Dividend Utility Functions  ======== */\n\n  /** \n   * @notice Distributes dividends to token holders.\n   * @dev It reverts if the total supply is 0.\n   * It emits the `FundsDistributed` event if the amount to distribute is greater than 0.\n   * About undistributed dividends:\n   *   In each distribution, there is a small amount which does not get distributed,\n   *   which is `(amount * POINTS_MULTIPLIER) % totalShares()`.\n   *   With a well-chosen `POINTS_MULTIPLIER`, the amount of funds that are not getting\n   *   distributed in a distribution can be less than 1 (base unit).\n   */\n  function _distributeDividends(uint256 amount) internal {\n    uint256 shares = getTotalShares();\n    require(shares > 0, \"No shares circulating\");\n\n    if (amount > 0) {\n      pointsPerShare = pointsPerShare.add(\n        amount.mul(POINTS_MULTIPLIER) / shares\n      );\n      emit DividendsDistributed(msg.sender, amount);\n    }\n  }\n\n  /**\n   * @notice Prepares collection of owed dividends\n   * @dev It emits a `DividendsWithdrawn` event if the amount of withdrawn dividends is\n   * greater than 0.\n   */\n  function _prepareCollect(address account) internal returns (uint256) {\n    uint256 _withdrawableDividend = withdrawableDividendsOf(account);\n    if (_withdrawableDividend > 0) {\n      withdrawnDividends[account] = withdrawnDividends[account].add(_withdrawableDividend);\n      emit DividendsWithdrawn(account, _withdrawableDividend);\n    }\n    return _withdrawableDividend;\n  }\n\n  function _correctPointsForTransfer(address from, address to, uint256 shares) internal {\n    int256 _magCorrection = pointsPerShare.mul(shares).toInt256();\n    pointsCorrection[from] = pointsCorrection[from].add(_magCorrection);\n    pointsCorrection[to] = pointsCorrection[to].sub(_magCorrection);\n  }\n\n  /**\n   * @dev Increases or decreases the points correction for `account` by\n   * `shares*pointsPerShare`.\n   */\n  function _correctPoints(address account, int256 shares) internal {\n    pointsCorrection[account] = pointsCorrection[account]\n      .add(shares.mul(int256(pointsPerShare)));\n  }\n}",
+  "sourcePath": "/Users/glenci/Xhype/src/AbstractDividends.sol",
+  "ast": {
+    "absolutePath": "project:/src/AbstractDividends.sol",
+    "exportedSymbols": {
+      "AbstractDividends": [
+        2439
+      ],
+      "IAbstractDividends": [
+        9240
+      ],
+      "LowGasSafeMath": [
+        9867
+      ],
+      "SafeCast": [
+        9980
+      ],
+      "SignedSafeMath": [
+        1530
+      ]
+    },
+    "id": 2440,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2151,
+        "literals": [
+          "solidity",
+          "0.8",
+          ".19"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:12"
+      },
+      {
+        "absolutePath": "@openzeppelin/contracts/utils/math/SignedSafeMath.sol",
+        "file": "@openzeppelin/contracts/utils/math/SignedSafeMath.sol",
+        "id": 2152,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 2440,
+        "sourceUnit": 1531,
+        "src": "57:63:12",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "project:/src/libraries/LowGasSafeMath.sol",
+        "file": "../src/libraries/LowGasSafeMath.sol",
+        "id": 2153,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 2440,
+        "sourceUnit": 9868,
+        "src": "121:45:12",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "project:/src/libraries/SafeCast.sol",
+        "file": "../src/libraries/SafeCast.sol",
+        "id": 2154,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 2440,
+        "sourceUnit": 9981,
+        "src": "167:39:12",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "project:/src/interfaces/IAbstractDividends.sol",
+        "file": "../src/interfaces/IAbstractDividends.sol",
+        "id": 2155,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 2440,
+        "sourceUnit": 9241,
+        "src": "207:50:12",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": true,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 2157,
+              "name": "IAbstractDividends",
+              "nameLocations": [
+                "963:18:12"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 9240,
+              "src": "963:18:12"
+            },
+            "id": 2158,
+            "nodeType": "InheritanceSpecifier",
+            "src": "963:18:12"
+          }
+        ],
+        "canonicalName": "AbstractDividends",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 2156,
+          "nodeType": "StructuredDocumentation",
+          "src": "259:664:12",
+          "text": " @dev Many functions in this contract were taken from this repository:\n https://github.com/atpar/funds-distribution-token/blob/master/contracts/FundsDistributionToken.sol\n which is an example implementation of ERC 2222, the draft for which can be found at\n https://github.com/atpar/funds-distribution-token/blob/master/EIP-DRAFT.md\n This contract has been substantially modified from the original and does not comply with ERC 2222.\n Many functions were renamed as \"dividends\" rather than \"funds\" and the core functionality was separated\n into this abstract contract which can be inherited by anything tracking ownership of dividend shares."
+        },
+        "fullyImplemented": true,
+        "id": 2439,
+        "linearizedBaseContracts": [
+          2439,
+          9240
+        ],
+        "name": "AbstractDividends",
+        "nameLocation": "942:17:12",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "global": false,
+            "id": 2161,
+            "libraryName": {
+              "id": 2159,
+              "name": "LowGasSafeMath",
+              "nameLocations": [
+                "992:14:12"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 9867,
+              "src": "992:14:12"
+            },
+            "nodeType": "UsingForDirective",
+            "src": "986:33:12",
+            "typeName": {
+              "id": 2160,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "1011:7:12",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            }
+          },
+          {
+            "global": false,
+            "id": 2164,
+            "libraryName": {
+              "id": 2162,
+              "name": "SafeCast",
+              "nameLocations": [
+                "1028:8:12"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 9980,
+              "src": "1028:8:12"
+            },
+            "nodeType": "UsingForDirective",
+            "src": "1022:27:12",
+            "typeName": {
+              "id": 2163,
+              "name": "uint128",
+              "nodeType": "ElementaryTypeName",
+              "src": "1041:7:12",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint128",
+                "typeString": "uint128"
+              }
+            }
+          },
+          {
+            "global": false,
+            "id": 2167,
+            "libraryName": {
+              "id": 2165,
+              "name": "SafeCast",
+              "nameLocations": [
+                "1058:8:12"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 9980,
+              "src": "1058:8:12"
+            },
+            "nodeType": "UsingForDirective",
+            "src": "1052:27:12",
+            "typeName": {
+              "id": 2166,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "1071:7:12",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            }
+          },
+          {
+            "global": false,
+            "id": 2170,
+            "libraryName": {
+              "id": 2168,
+              "name": "SafeCast",
+              "nameLocations": [
+                "1088:8:12"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 9980,
+              "src": "1088:8:12"
+            },
+            "nodeType": "UsingForDirective",
+            "src": "1082:26:12",
+            "typeName": {
+              "id": 2169,
+              "name": "int256",
+              "nodeType": "ElementaryTypeName",
+              "src": "1101:6:12",
+              "typeDescriptions": {
+                "typeIdentifier": "t_int256",
+                "typeString": "int256"
+              }
+            }
+          },
+          {
+            "global": false,
+            "id": 2173,
+            "libraryName": {
+              "id": 2171,
+              "name": "SignedSafeMath",
+              "nameLocations": [
+                "1117:14:12"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 1530,
+              "src": "1117:14:12"
+            },
+            "nodeType": "UsingForDirective",
+            "src": "1111:32:12",
+            "typeName": {
+              "id": 2172,
+              "name": "int256",
+              "nodeType": "ElementaryTypeName",
+              "src": "1136:6:12",
+              "typeDescriptions": {
+                "typeIdentifier": "t_int256",
+                "typeString": "int256"
+              }
+            }
+          },
+          {
+            "constant": true,
+            "id": 2180,
+            "mutability": "constant",
+            "name": "POINTS_MULTIPLIER",
+            "nameLocation": "1209:17:12",
+            "nodeType": "VariableDeclaration",
+            "scope": 2439,
+            "src": "1183:63:12",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint128",
+              "typeString": "uint128"
+            },
+            "typeName": {
+              "id": 2174,
+              "name": "uint128",
+              "nodeType": "ElementaryTypeName",
+              "src": "1183:7:12",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint128",
+                "typeString": "uint128"
+              }
+            },
+            "value": {
+              "expression": {
+                "arguments": [
+                  {
+                    "id": 2177,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "lValueRequested": false,
+                    "nodeType": "ElementaryTypeNameExpression",
+                    "src": "1234:7:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_type$_t_uint128_$",
+                      "typeString": "type(uint128)"
+                    },
+                    "typeName": {
+                      "id": 2176,
+                      "name": "uint128",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1234:7:12",
+                      "typeDescriptions": {}
+                    }
+                  }
+                ],
+                "expression": {
+                  "argumentTypes": [
+                    {
+                      "typeIdentifier": "t_type$_t_uint128_$",
+                      "typeString": "type(uint128)"
+                    }
+                  ],
+                  "id": 2175,
+                  "name": "type",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 4294967269,
+                  "src": "1229:4:12",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_function_metatype_pure$__$returns$__$",
+                    "typeString": "function () pure"
+                  }
+                },
+                "id": 2178,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "kind": "functionCall",
+                "lValueRequested": false,
+                "nameLocations": [],
+                "names": [],
+                "nodeType": "FunctionCall",
+                "src": "1229:13:12",
+                "tryCall": false,
+                "typeDescriptions": {
+                  "typeIdentifier": "t_magic_meta_type_t_uint128",
+                  "typeString": "type(uint128)"
+                }
+              },
+              "id": 2179,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "lValueRequested": false,
+              "memberLocation": "1243:3:12",
+              "memberName": "max",
+              "nodeType": "MemberAccess",
+              "src": "1229:17:12",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint128",
+                "typeString": "uint128"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 2188,
+            "mutability": "immutable",
+            "name": "getSharesOf",
+            "nameLocation": "1365:11:12",
+            "nodeType": "VariableDeclaration",
+            "scope": 2439,
+            "src": "1306:70:12",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_uint256_$",
+              "typeString": "function (address) view returns (uint256)"
+            },
+            "typeName": {
+              "id": 2187,
+              "nodeType": "FunctionTypeName",
+              "parameterTypes": {
+                "id": 2183,
+                "nodeType": "ParameterList",
+                "parameters": [
+                  {
+                    "constant": false,
+                    "id": 2182,
+                    "mutability": "mutable",
+                    "name": "",
+                    "nameLocation": "-1:-1:-1",
+                    "nodeType": "VariableDeclaration",
+                    "scope": 2187,
+                    "src": "1315:7:12",
+                    "stateVariable": false,
+                    "storageLocation": "default",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    },
+                    "typeName": {
+                      "id": 2181,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1315:7:12",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "visibility": "internal"
+                  }
+                ],
+                "src": "1314:9:12"
+              },
+              "returnParameterTypes": {
+                "id": 2186,
+                "nodeType": "ParameterList",
+                "parameters": [
+                  {
+                    "constant": false,
+                    "id": 2185,
+                    "mutability": "mutable",
+                    "name": "",
+                    "nameLocation": "-1:-1:-1",
+                    "nodeType": "VariableDeclaration",
+                    "scope": 2187,
+                    "src": "1338:7:12",
+                    "stateVariable": false,
+                    "storageLocation": "default",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "typeName": {
+                      "id": 2184,
+                      "name": "uint256",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1338:7:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "visibility": "internal"
+                  }
+                ],
+                "src": "1337:9:12"
+              },
+              "src": "1306:48:12",
+              "stateMutability": "view",
+              "typeDescriptions": {
+                "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_uint256_$",
+                "typeString": "function (address) view returns (uint256)"
+              },
+              "visibility": "internal"
+            },
+            "visibility": "private"
+          },
+          {
+            "constant": false,
+            "id": 2194,
+            "mutability": "immutable",
+            "name": "getTotalShares",
+            "nameLocation": "1432:14:12",
+            "nodeType": "VariableDeclaration",
+            "scope": 2439,
+            "src": "1380:66:12",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_function_internal_view$__$returns$_t_uint256_$",
+              "typeString": "function () view returns (uint256)"
+            },
+            "typeName": {
+              "id": 2193,
+              "nodeType": "FunctionTypeName",
+              "parameterTypes": {
+                "id": 2189,
+                "nodeType": "ParameterList",
+                "parameters": [],
+                "src": "1388:2:12"
+              },
+              "returnParameterTypes": {
+                "id": 2192,
+                "nodeType": "ParameterList",
+                "parameters": [
+                  {
+                    "constant": false,
+                    "id": 2191,
+                    "mutability": "mutable",
+                    "name": "",
+                    "nameLocation": "-1:-1:-1",
+                    "nodeType": "VariableDeclaration",
+                    "scope": 2193,
+                    "src": "1405:7:12",
+                    "stateVariable": false,
+                    "storageLocation": "default",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "typeName": {
+                      "id": 2190,
+                      "name": "uint256",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1405:7:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "visibility": "internal"
+                  }
+                ],
+                "src": "1404:9:12"
+              },
+              "src": "1380:41:12",
+              "stateMutability": "view",
+              "typeDescriptions": {
+                "typeIdentifier": "t_function_internal_view$__$returns$_t_uint256_$",
+                "typeString": "function () view returns (uint256)"
+              },
+              "visibility": "internal"
+            },
+            "visibility": "private"
+          },
+          {
+            "constant": false,
+            "functionSelector": "7e245d79",
+            "id": 2196,
+            "mutability": "mutable",
+            "name": "pointsPerShare",
+            "nameLocation": "1500:14:12",
+            "nodeType": "VariableDeclaration",
+            "scope": 2439,
+            "src": "1485:29:12",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 2195,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "1485:7:12",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 2200,
+            "mutability": "mutable",
+            "name": "pointsCorrection",
+            "nameLocation": "1554:16:12",
+            "nodeType": "VariableDeclaration",
+            "scope": 2439,
+            "src": "1518:52:12",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_int256_$",
+              "typeString": "mapping(address => int256)"
+            },
+            "typeName": {
+              "id": 2199,
+              "keyName": "",
+              "keyNameLocation": "-1:-1:-1",
+              "keyType": {
+                "id": 2197,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "1526:7:12",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1518:26:12",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_int256_$",
+                "typeString": "mapping(address => int256)"
+              },
+              "valueName": "",
+              "valueNameLocation": "-1:-1:-1",
+              "valueType": {
+                "id": 2198,
+                "name": "int256",
+                "nodeType": "ElementaryTypeName",
+                "src": "1537:6:12",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                }
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 2204,
+            "mutability": "mutable",
+            "name": "withdrawnDividends",
+            "nameLocation": "1610:18:12",
+            "nodeType": "VariableDeclaration",
+            "scope": 2439,
+            "src": "1574:54:12",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+              "typeString": "mapping(address => uint256)"
+            },
+            "typeName": {
+              "id": 2203,
+              "keyName": "",
+              "keyNameLocation": "-1:-1:-1",
+              "keyType": {
+                "id": 2201,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "1582:7:12",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1574:27:12",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                "typeString": "mapping(address => uint256)"
+              },
+              "valueName": "",
+              "valueNameLocation": "-1:-1:-1",
+              "valueType": {
+                "id": 2202,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "1593:7:12",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "visibility": "private"
+          },
+          {
+            "body": {
+              "id": 2229,
+              "nodeType": "Block",
+              "src": "1763:75:12",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 2223,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 2221,
+                      "name": "getSharesOf",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2188,
+                      "src": "1769:11:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_uint256_$",
+                        "typeString": "function (address) view returns (uint256)"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 2222,
+                      "name": "getSharesOf_",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2212,
+                      "src": "1783:12:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_uint256_$",
+                        "typeString": "function (address) view returns (uint256)"
+                      }
+                    },
+                    "src": "1769:26:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_uint256_$",
+                      "typeString": "function (address) view returns (uint256)"
+                    }
+                  },
+                  "id": 2224,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1769:26:12"
+                },
+                {
+                  "expression": {
+                    "id": 2227,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 2225,
+                      "name": "getTotalShares",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2194,
+                      "src": "1801:14:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_view$__$returns$_t_uint256_$",
+                        "typeString": "function () view returns (uint256)"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 2226,
+                      "name": "getTotalShares_",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2218,
+                      "src": "1818:15:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_view$__$returns$_t_uint256_$",
+                        "typeString": "function () view returns (uint256)"
+                      }
+                    },
+                    "src": "1801:32:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_function_internal_view$__$returns$_t_uint256_$",
+                      "typeString": "function () view returns (uint256)"
+                    }
+                  },
+                  "id": 2228,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1801:32:12"
+                }
+              ]
+            },
+            "id": 2230,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nameLocation": "-1:-1:-1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2219,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2212,
+                  "mutability": "mutable",
+                  "name": "getSharesOf_",
+                  "nameLocation": "1691:12:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2230,
+                  "src": "1650:53:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_uint256_$",
+                    "typeString": "function (address) view returns (uint256)"
+                  },
+                  "typeName": {
+                    "id": 2211,
+                    "nodeType": "FunctionTypeName",
+                    "parameterTypes": {
+                      "id": 2207,
+                      "nodeType": "ParameterList",
+                      "parameters": [
+                        {
+                          "constant": false,
+                          "id": 2206,
+                          "mutability": "mutable",
+                          "name": "",
+                          "nameLocation": "-1:-1:-1",
+                          "nodeType": "VariableDeclaration",
+                          "scope": 2211,
+                          "src": "1659:7:12",
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          },
+                          "typeName": {
+                            "id": 2205,
+                            "name": "address",
+                            "nodeType": "ElementaryTypeName",
+                            "src": "1659:7:12",
+                            "stateMutability": "nonpayable",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "visibility": "internal"
+                        }
+                      ],
+                      "src": "1658:9:12"
+                    },
+                    "returnParameterTypes": {
+                      "id": 2210,
+                      "nodeType": "ParameterList",
+                      "parameters": [
+                        {
+                          "constant": false,
+                          "id": 2209,
+                          "mutability": "mutable",
+                          "name": "",
+                          "nameLocation": "-1:-1:-1",
+                          "nodeType": "VariableDeclaration",
+                          "scope": 2211,
+                          "src": "1682:7:12",
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "typeName": {
+                            "id": 2208,
+                            "name": "uint256",
+                            "nodeType": "ElementaryTypeName",
+                            "src": "1682:7:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "visibility": "internal"
+                        }
+                      ],
+                      "src": "1681:9:12"
+                    },
+                    "src": "1650:53:12",
+                    "stateMutability": "view",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_uint256_$",
+                      "typeString": "function (address) view returns (uint256)"
+                    },
+                    "visibility": "internal"
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2218,
+                  "mutability": "mutable",
+                  "name": "getTotalShares_",
+                  "nameLocation": "1743:15:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2230,
+                  "src": "1709:49:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_function_internal_view$__$returns$_t_uint256_$",
+                    "typeString": "function () view returns (uint256)"
+                  },
+                  "typeName": {
+                    "id": 2217,
+                    "nodeType": "FunctionTypeName",
+                    "parameterTypes": {
+                      "id": 2213,
+                      "nodeType": "ParameterList",
+                      "parameters": [],
+                      "src": "1717:2:12"
+                    },
+                    "returnParameterTypes": {
+                      "id": 2216,
+                      "nodeType": "ParameterList",
+                      "parameters": [
+                        {
+                          "constant": false,
+                          "id": 2215,
+                          "mutability": "mutable",
+                          "name": "",
+                          "nameLocation": "-1:-1:-1",
+                          "nodeType": "VariableDeclaration",
+                          "scope": 2217,
+                          "src": "1734:7:12",
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "typeName": {
+                            "id": 2214,
+                            "name": "uint256",
+                            "nodeType": "ElementaryTypeName",
+                            "src": "1734:7:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "visibility": "internal"
+                        }
+                      ],
+                      "src": "1733:9:12"
+                    },
+                    "src": "1709:49:12",
+                    "stateMutability": "view",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_function_internal_view$__$returns$_t_uint256_$",
+                      "typeString": "function () view returns (uint256)"
+                    },
+                    "visibility": "internal"
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1644:118:12"
+            },
+            "returnParameters": {
+              "id": 2220,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1763:0:12"
+            },
+            "scope": 2439,
+            "src": "1633:205:12",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "baseFunctions": [
+              9209
+            ],
+            "body": {
+              "id": 2248,
+              "nodeType": "Block",
+              "src": "2201:81:12",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "baseExpression": {
+                          "id": 2243,
+                          "name": "withdrawnDividends",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 2204,
+                          "src": "2249:18:12",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                            "typeString": "mapping(address => uint256)"
+                          }
+                        },
+                        "id": 2245,
+                        "indexExpression": {
+                          "id": 2244,
+                          "name": "account",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 2233,
+                          "src": "2268:7:12",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "2249:27:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "arguments": [
+                          {
+                            "id": 2240,
+                            "name": "account",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 2233,
+                            "src": "2236:7:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          ],
+                          "id": 2239,
+                          "name": "cumulativeDividendsOf",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 2291,
+                          "src": "2214:21:12",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_uint256_$",
+                            "typeString": "function (address) view returns (uint256)"
+                          }
+                        },
+                        "id": 2241,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "nameLocations": [],
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2214:30:12",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "id": 2242,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberLocation": "2245:3:12",
+                      "memberName": "sub",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 9782,
+                      "src": "2214:34:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$attached_to$_t_uint256_$",
+                        "typeString": "function (uint256,uint256) pure returns (uint256)"
+                      }
+                    },
+                    "id": 2246,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2214:63:12",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 2238,
+                  "id": 2247,
+                  "nodeType": "Return",
+                  "src": "2207:70:12"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 2231,
+              "nodeType": "StructuredDocumentation",
+              "src": "1890:219:12",
+              "text": " @dev Returns the total amount of dividends a given address is able to withdraw.\n @param account Address of a dividend recipient\n @return A uint256 representing the dividends `account` can withdraw"
+            },
+            "functionSelector": "b131e610",
+            "id": 2249,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawableDividendsOf",
+            "nameLocation": "2121:23:12",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 2235,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "2174:8:12"
+            },
+            "parameters": {
+              "id": 2234,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2233,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "2153:7:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2249,
+                  "src": "2145:15:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2232,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2145:7:12",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2144:17:12"
+            },
+            "returnParameters": {
+              "id": 2238,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2237,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2249,
+                  "src": "2192:7:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2236,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2192:7:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2191:9:12"
+            },
+            "scope": 2439,
+            "src": "2112:170:12",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "baseFunctions": [
+              9217
+            ],
+            "body": {
+              "id": 2262,
+              "nodeType": "Block",
+              "src": "2575:45:12",
+              "statements": [
+                {
+                  "expression": {
+                    "baseExpression": {
+                      "id": 2258,
+                      "name": "withdrawnDividends",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2204,
+                      "src": "2588:18:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                        "typeString": "mapping(address => uint256)"
+                      }
+                    },
+                    "id": 2260,
+                    "indexExpression": {
+                      "id": 2259,
+                      "name": "account",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2252,
+                      "src": "2607:7:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "2588:27:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 2257,
+                  "id": 2261,
+                  "nodeType": "Return",
+                  "src": "2581:34:12"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 2250,
+              "nodeType": "StructuredDocumentation",
+              "src": "2286:200:12",
+              "text": " @notice View the amount of dividends that an address has withdrawn.\n @param account The address of a token holder.\n @return The amount of dividends that `account` has withdrawn."
+            },
+            "functionSelector": "53f83ad7",
+            "id": 2263,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawnDividendsOf",
+            "nameLocation": "2498:20:12",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 2254,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "2548:8:12"
+            },
+            "parameters": {
+              "id": 2253,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2252,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "2527:7:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2263,
+                  "src": "2519:15:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2251,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2519:7:12",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2518:17:12"
+            },
+            "returnParameters": {
+              "id": 2257,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2256,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2263,
+                  "src": "2566:7:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2255,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2566:7:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2565:9:12"
+            },
+            "scope": 2439,
+            "src": "2489:131:12",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "baseFunctions": [
+              9225
+            ],
+            "body": {
+              "id": 2290,
+              "nodeType": "Block",
+              "src": "3125:160:12",
+              "statements": [
+                {
+                  "expression": {
+                    "commonType": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "id": 2288,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "arguments": [],
+                      "expression": {
+                        "argumentTypes": [],
+                        "expression": {
+                          "arguments": [
+                            {
+                              "baseExpression": {
+                                "id": 2281,
+                                "name": "pointsCorrection",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 2200,
+                                "src": "3215:16:12",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_mapping$_t_address_$_t_int256_$",
+                                  "typeString": "mapping(address => int256)"
+                                }
+                              },
+                              "id": 2283,
+                              "indexExpression": {
+                                "id": 2282,
+                                "name": "account",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 2266,
+                                "src": "3232:7:12",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              },
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "nodeType": "IndexAccess",
+                              "src": "3215:25:12",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_int256",
+                                "typeString": "int256"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_int256",
+                                "typeString": "int256"
+                              }
+                            ],
+                            "expression": {
+                              "arguments": [],
+                              "expression": {
+                                "argumentTypes": [],
+                                "expression": {
+                                  "arguments": [
+                                    {
+                                      "arguments": [
+                                        {
+                                          "id": 2275,
+                                          "name": "account",
+                                          "nodeType": "Identifier",
+                                          "overloadedDeclarations": [],
+                                          "referencedDeclaration": 2266,
+                                          "src": "3176:7:12",
+                                          "typeDescriptions": {
+                                            "typeIdentifier": "t_address",
+                                            "typeString": "address"
+                                          }
+                                        }
+                                      ],
+                                      "expression": {
+                                        "argumentTypes": [
+                                          {
+                                            "typeIdentifier": "t_address",
+                                            "typeString": "address"
+                                          }
+                                        ],
+                                        "id": 2274,
+                                        "name": "getSharesOf",
+                                        "nodeType": "Identifier",
+                                        "overloadedDeclarations": [],
+                                        "referencedDeclaration": 2188,
+                                        "src": "3164:11:12",
+                                        "typeDescriptions": {
+                                          "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_uint256_$",
+                                          "typeString": "function (address) view returns (uint256)"
+                                        }
+                                      },
+                                      "id": 2276,
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "kind": "functionCall",
+                                      "lValueRequested": false,
+                                      "nameLocations": [],
+                                      "names": [],
+                                      "nodeType": "FunctionCall",
+                                      "src": "3164:20:12",
+                                      "tryCall": false,
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                      }
+                                    }
+                                  ],
+                                  "expression": {
+                                    "argumentTypes": [
+                                      {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                      }
+                                    ],
+                                    "expression": {
+                                      "id": 2272,
+                                      "name": "pointsPerShare",
+                                      "nodeType": "Identifier",
+                                      "overloadedDeclarations": [],
+                                      "referencedDeclaration": 2196,
+                                      "src": "3138:14:12",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                      }
+                                    },
+                                    "id": 2273,
+                                    "isConstant": false,
+                                    "isLValue": false,
+                                    "isPure": false,
+                                    "lValueRequested": false,
+                                    "memberLocation": "3160:3:12",
+                                    "memberName": "mul",
+                                    "nodeType": "MemberAccess",
+                                    "referencedDeclaration": 9835,
+                                    "src": "3138:25:12",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$attached_to$_t_uint256_$",
+                                      "typeString": "function (uint256,uint256) pure returns (uint256)"
+                                    }
+                                  },
+                                  "id": 2277,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "kind": "functionCall",
+                                  "lValueRequested": false,
+                                  "nameLocations": [],
+                                  "names": [],
+                                  "nodeType": "FunctionCall",
+                                  "src": "3138:47:12",
+                                  "tryCall": false,
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                },
+                                "id": 2278,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberLocation": "3193:8:12",
+                                "memberName": "toInt256",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": 9957,
+                                "src": "3138:63:12",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_function_internal_pure$_t_uint256_$returns$_t_int256_$attached_to$_t_uint256_$",
+                                  "typeString": "function (uint256) pure returns (int256)"
+                                }
+                              },
+                              "id": 2279,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "kind": "functionCall",
+                              "lValueRequested": false,
+                              "nameLocations": [],
+                              "names": [],
+                              "nodeType": "FunctionCall",
+                              "src": "3138:65:12",
+                              "tryCall": false,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_int256",
+                                "typeString": "int256"
+                              }
+                            },
+                            "id": 2280,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberLocation": "3211:3:12",
+                            "memberName": "add",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 1529,
+                            "src": "3138:76:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_internal_pure$_t_int256_$_t_int256_$returns$_t_int256_$attached_to$_t_int256_$",
+                              "typeString": "function (int256,int256) pure returns (int256)"
+                            }
+                          },
+                          "id": 2284,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "nameLocations": [],
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "3138:103:12",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_int256",
+                            "typeString": "int256"
+                          }
+                        },
+                        "id": 2285,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberLocation": "3249:9:12",
+                        "memberName": "toUint256",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 9979,
+                        "src": "3138:120:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_function_internal_pure$_t_int256_$returns$_t_uint256_$attached_to$_t_int256_$",
+                          "typeString": "function (int256) pure returns (uint256)"
+                        }
+                      },
+                      "id": 2286,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "functionCall",
+                      "lValueRequested": false,
+                      "nameLocations": [],
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "3138:122:12",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "/",
+                    "rightExpression": {
+                      "id": 2287,
+                      "name": "POINTS_MULTIPLIER",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2180,
+                      "src": "3263:17:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint128",
+                        "typeString": "uint128"
+                      }
+                    },
+                    "src": "3138:142:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 2271,
+                  "id": 2289,
+                  "nodeType": "Return",
+                  "src": "3131:149:12"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 2264,
+              "nodeType": "StructuredDocumentation",
+              "src": "2624:411:12",
+              "text": " @notice View the amount of dividends that an address has earned in total.\n @dev accumulativeFundsOf(account) = withdrawableDividendsOf(account) + withdrawnDividendsOf(account)\n = (pointsPerShare * balanceOf(account) + pointsCorrection[account]) / POINTS_MULTIPLIER\n @param account The address of a token holder.\n @return The amount of dividends that `account` has earned in total."
+            },
+            "functionSelector": "1a60b63d",
+            "id": 2291,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "cumulativeDividendsOf",
+            "nameLocation": "3047:21:12",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 2268,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "3098:8:12"
+            },
+            "parameters": {
+              "id": 2267,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2266,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "3077:7:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2291,
+                  "src": "3069:15:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2265,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3069:7:12",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3068:17:12"
+            },
+            "returnParameters": {
+              "id": 2271,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2270,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2291,
+                  "src": "3116:7:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2269,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3116:7:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3115:9:12"
+            },
+            "scope": 2439,
+            "src": "3038:247:12",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 2332,
+              "nodeType": "Block",
+              "src": "3943:275:12",
+              "statements": [
+                {
+                  "assignments": [
+                    2298
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 2298,
+                      "mutability": "mutable",
+                      "name": "shares",
+                      "nameLocation": "3957:6:12",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 2332,
+                      "src": "3949:14:12",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 2297,
+                        "name": "uint256",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "3949:7:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 2301,
+                  "initialValue": {
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 2299,
+                      "name": "getTotalShares",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2194,
+                      "src": "3966:14:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_view$__$returns$_t_uint256_$",
+                        "typeString": "function () view returns (uint256)"
+                      }
+                    },
+                    "id": 2300,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "3966:16:12",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "3949:33:12"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        "id": 2305,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "id": 2303,
+                          "name": "shares",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 2298,
+                          "src": "3996:6:12",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": ">",
+                        "rightExpression": {
+                          "hexValue": "30",
+                          "id": 2304,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "number",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "4005:1:12",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_rational_0_by_1",
+                            "typeString": "int_const 0"
+                          },
+                          "value": "0"
+                        },
+                        "src": "3996:10:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "4e6f207368617265732063697263756c6174696e67",
+                        "id": 2306,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "4008:23:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_22096463fd25d8b01da42691eab55d5d33a9533c310fc74fb79502f72a3c1cc8",
+                          "typeString": "literal_string \"No shares circulating\""
+                        },
+                        "value": "No shares circulating"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_22096463fd25d8b01da42691eab55d5d33a9533c310fc74fb79502f72a3c1cc8",
+                          "typeString": "literal_string \"No shares circulating\""
+                        }
+                      ],
+                      "id": 2302,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
+                      "referencedDeclaration": 4294967278,
+                      "src": "3988:7:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 2307,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "3988:44:12",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 2308,
+                  "nodeType": "ExpressionStatement",
+                  "src": "3988:44:12"
+                },
+                {
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "id": 2311,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "id": 2309,
+                      "name": "amount",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2294,
+                      "src": "4043:6:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": ">",
+                    "rightExpression": {
+                      "hexValue": "30",
+                      "id": 2310,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "4052:1:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "4043:10:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 2331,
+                  "nodeType": "IfStatement",
+                  "src": "4039:175:12",
+                  "trueBody": {
+                    "id": 2330,
+                    "nodeType": "Block",
+                    "src": "4055:159:12",
+                    "statements": [
+                      {
+                        "expression": {
+                          "id": 2322,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "id": 2312,
+                            "name": "pointsPerShare",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 2196,
+                            "src": "4063:14:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "arguments": [
+                              {
+                                "commonType": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                },
+                                "id": 2320,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "leftExpression": {
+                                  "arguments": [
+                                    {
+                                      "id": 2317,
+                                      "name": "POINTS_MULTIPLIER",
+                                      "nodeType": "Identifier",
+                                      "overloadedDeclarations": [],
+                                      "referencedDeclaration": 2180,
+                                      "src": "4119:17:12",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_uint128",
+                                        "typeString": "uint128"
+                                      }
+                                    }
+                                  ],
+                                  "expression": {
+                                    "argumentTypes": [
+                                      {
+                                        "typeIdentifier": "t_uint128",
+                                        "typeString": "uint128"
+                                      }
+                                    ],
+                                    "expression": {
+                                      "id": 2315,
+                                      "name": "amount",
+                                      "nodeType": "Identifier",
+                                      "overloadedDeclarations": [],
+                                      "referencedDeclaration": 2294,
+                                      "src": "4108:6:12",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                      }
+                                    },
+                                    "id": 2316,
+                                    "isConstant": false,
+                                    "isLValue": false,
+                                    "isPure": false,
+                                    "lValueRequested": false,
+                                    "memberLocation": "4115:3:12",
+                                    "memberName": "mul",
+                                    "nodeType": "MemberAccess",
+                                    "referencedDeclaration": 9835,
+                                    "src": "4108:10:12",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$attached_to$_t_uint256_$",
+                                      "typeString": "function (uint256,uint256) pure returns (uint256)"
+                                    }
+                                  },
+                                  "id": 2318,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "kind": "functionCall",
+                                  "lValueRequested": false,
+                                  "nameLocations": [],
+                                  "names": [],
+                                  "nodeType": "FunctionCall",
+                                  "src": "4108:29:12",
+                                  "tryCall": false,
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                },
+                                "nodeType": "BinaryOperation",
+                                "operator": "/",
+                                "rightExpression": {
+                                  "id": 2319,
+                                  "name": "shares",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 2298,
+                                  "src": "4140:6:12",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                },
+                                "src": "4108:38:12",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "expression": {
+                                "id": 2313,
+                                "name": "pointsPerShare",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 2196,
+                                "src": "4080:14:12",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "id": 2314,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberLocation": "4095:3:12",
+                              "memberName": "add",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": 9735,
+                              "src": "4080:18:12",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$attached_to$_t_uint256_$",
+                                "typeString": "function (uint256,uint256) pure returns (uint256)"
+                              }
+                            },
+                            "id": 2321,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "nameLocations": [],
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "4080:74:12",
+                            "tryCall": false,
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "src": "4063:91:12",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "id": 2323,
+                        "nodeType": "ExpressionStatement",
+                        "src": "4063:91:12"
+                      },
+                      {
+                        "eventCall": {
+                          "arguments": [
+                            {
+                              "expression": {
+                                "id": 2325,
+                                "name": "msg",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 4294967281,
+                                "src": "4188:3:12",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_magic_message",
+                                  "typeString": "msg"
+                                }
+                              },
+                              "id": 2326,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberLocation": "4192:6:12",
+                              "memberName": "sender",
+                              "nodeType": "MemberAccess",
+                              "src": "4188:10:12",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            {
+                              "id": 2327,
+                              "name": "amount",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 2294,
+                              "src": "4200:6:12",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              },
+                              {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            ],
+                            "id": 2324,
+                            "name": "DividendsDistributed",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 9232,
+                            "src": "4167:20:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_uint256_$returns$__$",
+                              "typeString": "function (address,uint256)"
+                            }
+                          },
+                          "id": 2328,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "nameLocations": [],
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "4167:40:12",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_tuple$__$",
+                            "typeString": "tuple()"
+                          }
+                        },
+                        "id": 2329,
+                        "nodeType": "EmitStatement",
+                        "src": "4162:45:12"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "documentation": {
+              "id": 2292,
+              "nodeType": "StructuredDocumentation",
+              "src": "3343:542:12",
+              "text": " @notice Distributes dividends to token holders.\n @dev It reverts if the total supply is 0.\n It emits the `FundsDistributed` event if the amount to distribute is greater than 0.\n About undistributed dividends:\n   In each distribution, there is a small amount which does not get distributed,\n   which is `(amount * POINTS_MULTIPLIER) % totalShares()`.\n   With a well-chosen `POINTS_MULTIPLIER`, the amount of funds that are not getting\n   distributed in a distribution can be less than 1 (base unit)."
+            },
+            "id": 2333,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_distributeDividends",
+            "nameLocation": "3897:20:12",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2295,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2294,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "3926:6:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2333,
+                  "src": "3918:14:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2293,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3918:7:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3917:16:12"
+            },
+            "returnParameters": {
+              "id": 2296,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3943:0:12"
+            },
+            "scope": 2439,
+            "src": "3888:330:12",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 2370,
+              "nodeType": "Block",
+              "src": "4463:307:12",
+              "statements": [
+                {
+                  "assignments": [
+                    2342
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 2342,
+                      "mutability": "mutable",
+                      "name": "_withdrawableDividend",
+                      "nameLocation": "4477:21:12",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 2370,
+                      "src": "4469:29:12",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 2341,
+                        "name": "uint256",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "4469:7:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 2346,
+                  "initialValue": {
+                    "arguments": [
+                      {
+                        "id": 2344,
+                        "name": "account",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 2336,
+                        "src": "4525:7:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 2343,
+                      "name": "withdrawableDividendsOf",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2249,
+                      "src": "4501:23:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_uint256_$",
+                        "typeString": "function (address) view returns (uint256)"
+                      }
+                    },
+                    "id": 2345,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "4501:32:12",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "4469:64:12"
+                },
+                {
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "id": 2349,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "id": 2347,
+                      "name": "_withdrawableDividend",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2342,
+                      "src": "4543:21:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": ">",
+                    "rightExpression": {
+                      "hexValue": "30",
+                      "id": 2348,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "4567:1:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "4543:25:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 2367,
+                  "nodeType": "IfStatement",
+                  "src": "4539:193:12",
+                  "trueBody": {
+                    "id": 2366,
+                    "nodeType": "Block",
+                    "src": "4570:162:12",
+                    "statements": [
+                      {
+                        "expression": {
+                          "id": 2359,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "baseExpression": {
+                              "id": 2350,
+                              "name": "withdrawnDividends",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 2204,
+                              "src": "4578:18:12",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                                "typeString": "mapping(address => uint256)"
+                              }
+                            },
+                            "id": 2352,
+                            "indexExpression": {
+                              "id": 2351,
+                              "name": "account",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 2336,
+                              "src": "4597:7:12",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": true,
+                            "nodeType": "IndexAccess",
+                            "src": "4578:27:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "arguments": [
+                              {
+                                "id": 2357,
+                                "name": "_withdrawableDividend",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 2342,
+                                "src": "4640:21:12",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "expression": {
+                                "baseExpression": {
+                                  "id": 2353,
+                                  "name": "withdrawnDividends",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 2204,
+                                  "src": "4608:18:12",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                                    "typeString": "mapping(address => uint256)"
+                                  }
+                                },
+                                "id": 2355,
+                                "indexExpression": {
+                                  "id": 2354,
+                                  "name": "account",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 2336,
+                                  "src": "4627:7:12",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_address",
+                                    "typeString": "address"
+                                  }
+                                },
+                                "isConstant": false,
+                                "isLValue": true,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "nodeType": "IndexAccess",
+                                "src": "4608:27:12",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "id": 2356,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberLocation": "4636:3:12",
+                              "memberName": "add",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": 9735,
+                              "src": "4608:31:12",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$attached_to$_t_uint256_$",
+                                "typeString": "function (uint256,uint256) pure returns (uint256)"
+                              }
+                            },
+                            "id": 2358,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "nameLocations": [],
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "4608:54:12",
+                            "tryCall": false,
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "src": "4578:84:12",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "id": 2360,
+                        "nodeType": "ExpressionStatement",
+                        "src": "4578:84:12"
+                      },
+                      {
+                        "eventCall": {
+                          "arguments": [
+                            {
+                              "id": 2362,
+                              "name": "account",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 2336,
+                              "src": "4694:7:12",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            {
+                              "id": 2363,
+                              "name": "_withdrawableDividend",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 2342,
+                              "src": "4703:21:12",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              },
+                              {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            ],
+                            "id": 2361,
+                            "name": "DividendsWithdrawn",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 9239,
+                            "src": "4675:18:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_uint256_$returns$__$",
+                              "typeString": "function (address,uint256)"
+                            }
+                          },
+                          "id": 2364,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "nameLocations": [],
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "4675:50:12",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_tuple$__$",
+                            "typeString": "tuple()"
+                          }
+                        },
+                        "id": 2365,
+                        "nodeType": "EmitStatement",
+                        "src": "4670:55:12"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "expression": {
+                    "id": 2368,
+                    "name": "_withdrawableDividend",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 2342,
+                    "src": "4744:21:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 2340,
+                  "id": 2369,
+                  "nodeType": "Return",
+                  "src": "4737:28:12"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 2334,
+              "nodeType": "StructuredDocumentation",
+              "src": "4222:169:12",
+              "text": " @notice Prepares collection of owed dividends\n @dev It emits a `DividendsWithdrawn` event if the amount of withdrawn dividends is\n greater than 0."
+            },
+            "id": 2371,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_prepareCollect",
+            "nameLocation": "4403:15:12",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2337,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2336,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "4427:7:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2371,
+                  "src": "4419:15:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2335,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4419:7:12",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4418:17:12"
+            },
+            "returnParameters": {
+              "id": 2340,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2339,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2371,
+                  "src": "4454:7:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2338,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4454:7:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4453:9:12"
+            },
+            "scope": 2439,
+            "src": "4394:376:12",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 2411,
+              "nodeType": "Block",
+              "src": "4860:214:12",
+              "statements": [
+                {
+                  "assignments": [
+                    2381
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 2381,
+                      "mutability": "mutable",
+                      "name": "_magCorrection",
+                      "nameLocation": "4873:14:12",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 2411,
+                      "src": "4866:21:12",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_int256",
+                        "typeString": "int256"
+                      },
+                      "typeName": {
+                        "id": 2380,
+                        "name": "int256",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "4866:6:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_int256",
+                          "typeString": "int256"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 2388,
+                  "initialValue": {
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "expression": {
+                        "arguments": [
+                          {
+                            "id": 2384,
+                            "name": "shares",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 2377,
+                            "src": "4909:6:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          ],
+                          "expression": {
+                            "id": 2382,
+                            "name": "pointsPerShare",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 2196,
+                            "src": "4890:14:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "id": 2383,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberLocation": "4905:3:12",
+                          "memberName": "mul",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 9835,
+                          "src": "4890:18:12",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$attached_to$_t_uint256_$",
+                            "typeString": "function (uint256,uint256) pure returns (uint256)"
+                          }
+                        },
+                        "id": 2385,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "nameLocations": [],
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "4890:26:12",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "id": 2386,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberLocation": "4917:8:12",
+                      "memberName": "toInt256",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 9957,
+                      "src": "4890:35:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_pure$_t_uint256_$returns$_t_int256_$attached_to$_t_uint256_$",
+                        "typeString": "function (uint256) pure returns (int256)"
+                      }
+                    },
+                    "id": 2387,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "4890:37:12",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "4866:61:12"
+                },
+                {
+                  "expression": {
+                    "id": 2398,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "id": 2389,
+                        "name": "pointsCorrection",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 2200,
+                        "src": "4933:16:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_int256_$",
+                          "typeString": "mapping(address => int256)"
+                        }
+                      },
+                      "id": 2391,
+                      "indexExpression": {
+                        "id": 2390,
+                        "name": "from",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 2373,
+                        "src": "4950:4:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "4933:22:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_int256",
+                        "typeString": "int256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "arguments": [
+                        {
+                          "id": 2396,
+                          "name": "_magCorrection",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 2381,
+                          "src": "4985:14:12",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_int256",
+                            "typeString": "int256"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_int256",
+                            "typeString": "int256"
+                          }
+                        ],
+                        "expression": {
+                          "baseExpression": {
+                            "id": 2392,
+                            "name": "pointsCorrection",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 2200,
+                            "src": "4958:16:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_int256_$",
+                              "typeString": "mapping(address => int256)"
+                            }
+                          },
+                          "id": 2394,
+                          "indexExpression": {
+                            "id": 2393,
+                            "name": "from",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 2373,
+                            "src": "4975:4:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "4958:22:12",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_int256",
+                            "typeString": "int256"
+                          }
+                        },
+                        "id": 2395,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberLocation": "4981:3:12",
+                        "memberName": "add",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 1529,
+                        "src": "4958:26:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_function_internal_pure$_t_int256_$_t_int256_$returns$_t_int256_$attached_to$_t_int256_$",
+                          "typeString": "function (int256,int256) pure returns (int256)"
+                        }
+                      },
+                      "id": 2397,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "functionCall",
+                      "lValueRequested": false,
+                      "nameLocations": [],
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "4958:42:12",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_int256",
+                        "typeString": "int256"
+                      }
+                    },
+                    "src": "4933:67:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "id": 2399,
+                  "nodeType": "ExpressionStatement",
+                  "src": "4933:67:12"
+                },
+                {
+                  "expression": {
+                    "id": 2409,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "id": 2400,
+                        "name": "pointsCorrection",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 2200,
+                        "src": "5006:16:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_int256_$",
+                          "typeString": "mapping(address => int256)"
+                        }
+                      },
+                      "id": 2402,
+                      "indexExpression": {
+                        "id": 2401,
+                        "name": "to",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 2375,
+                        "src": "5023:2:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "5006:20:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_int256",
+                        "typeString": "int256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "arguments": [
+                        {
+                          "id": 2407,
+                          "name": "_magCorrection",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 2381,
+                          "src": "5054:14:12",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_int256",
+                            "typeString": "int256"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_int256",
+                            "typeString": "int256"
+                          }
+                        ],
+                        "expression": {
+                          "baseExpression": {
+                            "id": 2403,
+                            "name": "pointsCorrection",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 2200,
+                            "src": "5029:16:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_int256_$",
+                              "typeString": "mapping(address => int256)"
+                            }
+                          },
+                          "id": 2405,
+                          "indexExpression": {
+                            "id": 2404,
+                            "name": "to",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 2375,
+                            "src": "5046:2:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "5029:20:12",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_int256",
+                            "typeString": "int256"
+                          }
+                        },
+                        "id": 2406,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberLocation": "5050:3:12",
+                        "memberName": "sub",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 1514,
+                        "src": "5029:24:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_function_internal_pure$_t_int256_$_t_int256_$returns$_t_int256_$attached_to$_t_int256_$",
+                          "typeString": "function (int256,int256) pure returns (int256)"
+                        }
+                      },
+                      "id": 2408,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "functionCall",
+                      "lValueRequested": false,
+                      "nameLocations": [],
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "5029:40:12",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_int256",
+                        "typeString": "int256"
+                      }
+                    },
+                    "src": "5006:63:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "id": 2410,
+                  "nodeType": "ExpressionStatement",
+                  "src": "5006:63:12"
+                }
+              ]
+            },
+            "id": 2412,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_correctPointsForTransfer",
+            "nameLocation": "4783:25:12",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2378,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2373,
+                  "mutability": "mutable",
+                  "name": "from",
+                  "nameLocation": "4817:4:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2412,
+                  "src": "4809:12:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2372,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4809:7:12",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2375,
+                  "mutability": "mutable",
+                  "name": "to",
+                  "nameLocation": "4831:2:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2412,
+                  "src": "4823:10:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2374,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4823:7:12",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2377,
+                  "mutability": "mutable",
+                  "name": "shares",
+                  "nameLocation": "4843:6:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2412,
+                  "src": "4835:14:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2376,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4835:7:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4808:42:12"
+            },
+            "returnParameters": {
+              "id": 2379,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4860:0:12"
+            },
+            "scope": 2439,
+            "src": "4774:300:12",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 2437,
+              "nodeType": "Block",
+              "src": "5257:111:12",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 2435,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "id": 2420,
+                        "name": "pointsCorrection",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 2200,
+                        "src": "5263:16:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_int256_$",
+                          "typeString": "mapping(address => int256)"
+                        }
+                      },
+                      "id": 2422,
+                      "indexExpression": {
+                        "id": 2421,
+                        "name": "account",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 2415,
+                        "src": "5280:7:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "5263:25:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_int256",
+                        "typeString": "int256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "arguments": [
+                        {
+                          "arguments": [
+                            {
+                              "arguments": [
+                                {
+                                  "id": 2431,
+                                  "name": "pointsPerShare",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 2196,
+                                  "src": "5346:14:12",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                }
+                              ],
+                              "expression": {
+                                "argumentTypes": [
+                                  {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                ],
+                                "id": 2430,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": true,
+                                "lValueRequested": false,
+                                "nodeType": "ElementaryTypeNameExpression",
+                                "src": "5339:6:12",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_type$_t_int256_$",
+                                  "typeString": "type(int256)"
+                                },
+                                "typeName": {
+                                  "id": 2429,
+                                  "name": "int256",
+                                  "nodeType": "ElementaryTypeName",
+                                  "src": "5339:6:12",
+                                  "typeDescriptions": {}
+                                }
+                              },
+                              "id": 2432,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "kind": "typeConversion",
+                              "lValueRequested": false,
+                              "nameLocations": [],
+                              "names": [],
+                              "nodeType": "FunctionCall",
+                              "src": "5339:22:12",
+                              "tryCall": false,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_int256",
+                                "typeString": "int256"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_int256",
+                                "typeString": "int256"
+                              }
+                            ],
+                            "expression": {
+                              "id": 2427,
+                              "name": "shares",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 2417,
+                              "src": "5328:6:12",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_int256",
+                                "typeString": "int256"
+                              }
+                            },
+                            "id": 2428,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberLocation": "5335:3:12",
+                            "memberName": "mul",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 1484,
+                            "src": "5328:10:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_internal_pure$_t_int256_$_t_int256_$returns$_t_int256_$attached_to$_t_int256_$",
+                              "typeString": "function (int256,int256) pure returns (int256)"
+                            }
+                          },
+                          "id": 2433,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "nameLocations": [],
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "5328:34:12",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_int256",
+                            "typeString": "int256"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_int256",
+                            "typeString": "int256"
+                          }
+                        ],
+                        "expression": {
+                          "baseExpression": {
+                            "id": 2423,
+                            "name": "pointsCorrection",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 2200,
+                            "src": "5291:16:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_int256_$",
+                              "typeString": "mapping(address => int256)"
+                            }
+                          },
+                          "id": 2425,
+                          "indexExpression": {
+                            "id": 2424,
+                            "name": "account",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 2415,
+                            "src": "5308:7:12",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "5291:25:12",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_int256",
+                            "typeString": "int256"
+                          }
+                        },
+                        "id": 2426,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberLocation": "5324:3:12",
+                        "memberName": "add",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 1529,
+                        "src": "5291:36:12",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_function_internal_pure$_t_int256_$_t_int256_$returns$_t_int256_$attached_to$_t_int256_$",
+                          "typeString": "function (int256,int256) pure returns (int256)"
+                        }
+                      },
+                      "id": 2434,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "functionCall",
+                      "lValueRequested": false,
+                      "nameLocations": [],
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "5291:72:12",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_int256",
+                        "typeString": "int256"
+                      }
+                    },
+                    "src": "5263:100:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "id": 2436,
+                  "nodeType": "ExpressionStatement",
+                  "src": "5263:100:12"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 2413,
+              "nodeType": "StructuredDocumentation",
+              "src": "5078:111:12",
+              "text": " @dev Increases or decreases the points correction for `account` by\n `shares*pointsPerShare`."
+            },
+            "id": 2438,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_correctPoints",
+            "nameLocation": "5201:14:12",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2418,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2415,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "5224:7:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2438,
+                  "src": "5216:15:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2414,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5216:7:12",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2417,
+                  "mutability": "mutable",
+                  "name": "shares",
+                  "nameLocation": "5240:6:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2438,
+                  "src": "5233:13:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  },
+                  "typeName": {
+                    "id": 2416,
+                    "name": "int256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5233:6:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5215:32:12"
+            },
+            "returnParameters": {
+              "id": 2419,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5257:0:12"
+            },
+            "scope": 2439,
+            "src": "5192:176:12",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 2440,
+        "src": "924:4446:12",
+        "usedErrors": []
+      }
+    ],
+    "src": "32:5338:12"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.19+commit.7dd6d404.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.10",
+  "updatedAt": "2023-05-05T21:35:45.752Z",
+  "devdoc": {
+    "details": "Many functions in this contract were taken from this repository: https://github.com/atpar/funds-distribution-token/blob/master/contracts/FundsDistributionToken.sol which is an example implementation of ERC 2222, the draft for which can be found at https://github.com/atpar/funds-distribution-token/blob/master/EIP-DRAFT.md This contract has been substantially modified from the original and does not comply with ERC 2222. Many functions were renamed as \"dividends\" rather than \"funds\" and the core functionality was separated into this abstract contract which can be inherited by anything tracking ownership of dividend shares.",
+    "events": {
+      "DividendsDistributed(address,uint256)": {
+        "details": "This event emits when new funds are distributed",
+        "params": {
+          "by": "the address of the sender who distributed funds",
+          "dividendsDistributed": "the amount of funds received for distribution"
+        }
+      },
+      "DividendsWithdrawn(address,uint256)": {
+        "details": "This event emits when distributed funds are withdrawn by a token holder.",
+        "params": {
+          "by": "the address of the receiver of funds",
+          "fundsWithdrawn": "the amount of funds that were withdrawn"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "cumulativeDividendsOf(address)": {
+        "details": "accumulativeFundsOf(account) = withdrawableDividendsOf(account) + withdrawnDividendsOf(account) = (pointsPerShare * balanceOf(account) + pointsCorrection[account]) / POINTS_MULTIPLIER",
+        "params": {
+          "account": "The address of a token holder."
+        },
+        "returns": {
+          "_0": "The amount of dividends that `account` has earned in total."
+        }
+      },
+      "withdrawableDividendsOf(address)": {
+        "details": "Returns the total amount of dividends a given address is able to withdraw.",
+        "params": {
+          "account": "Address of a dividend recipient"
+        },
+        "returns": {
+          "_0": "A uint256 representing the dividends `account` can withdraw"
+        }
+      },
+      "withdrawnDividendsOf(address)": {
+        "params": {
+          "account": "The address of a token holder."
+        },
+        "returns": {
+          "_0": "The amount of dividends that `account` has withdrawn."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "cumulativeDividendsOf(address)": {
+        "notice": "View the amount of dividends that an address has earned in total."
+      },
+      "withdrawnDividendsOf(address)": {
+        "notice": "View the amount of dividends that an address has withdrawn."
+      }
+    },
+    "version": 1
+  }
+}

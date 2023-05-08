@@ -1,0 +1,397 @@
+{
+  "contractName": "DividendPayingTokenInterface",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "weiAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "DividendWithdrawn",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "weiAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "DividendsDistributed",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_owner",
+          "type": "address"
+        }
+      ],
+      "name": "dividendOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "withdrawDividend",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"weiAmount\",\"type\":\"uint256\"}],\"name\":\"DividendWithdrawn\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"weiAmount\",\"type\":\"uint256\"}],\"name\":\"DividendsDistributed\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"dividendOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"withdrawDividend\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/interfaces/DividendPayingTokenInterface.sol\":\"DividendPayingTokenInterface\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/src/interfaces/DividendPayingTokenInterface.sol\":{\"keccak256\":\"0x644af8851e44909a26223a3706c69c619cb55437ff2ffb755414591d6b33b15e\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://2247f5c8ac4e13e0c6b6a25054df18466902035ea93dcec82078e696cda367ba\",\"dweb:/ipfs/QmXdHLXCJkB11VxucG7qWtA3r5PuniwGBZu8jqbLdvoneE\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: UNLICENSED\npragma solidity 0.8.19;\n\ninterface DividendPayingTokenInterface {\n function dividendOf(address _owner) external view returns(uint256);\n function withdrawDividend() external;\n \n event DividendsDistributed(\n address indexed from,\n uint256 weiAmount\n );\n event DividendWithdrawn(\n address indexed to,\n uint256 weiAmount\n );\n}\n",
+  "sourcePath": "/Users/glenci/Xhype/src/interfaces/DividendPayingTokenInterface.sol",
+  "ast": {
+    "absolutePath": "project:/src/interfaces/DividendPayingTokenInterface.sol",
+    "exportedSymbols": {
+      "DividendPayingTokenInterface": [
+        6180
+      ]
+    },
+    "id": 6181,
+    "license": "UNLICENSED",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 6157,
+        "literals": [
+          "solidity",
+          "0.8",
+          ".19"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "39:23:14"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "DividendPayingTokenInterface",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 6180,
+        "linearizedBaseContracts": [
+          6180
+        ],
+        "name": "DividendPayingTokenInterface",
+        "nameLocation": "74:28:14",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "91b89fba",
+            "id": 6164,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "dividendOf",
+            "nameLocation": "115:10:14",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 6160,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 6159,
+                  "mutability": "mutable",
+                  "name": "_owner",
+                  "nameLocation": "134:6:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 6164,
+                  "src": "126:14:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 6158,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "126:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "125:16:14"
+            },
+            "returnParameters": {
+              "id": 6163,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 6162,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 6164,
+                  "src": "164:7:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 6161,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "164:7:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "163:9:14"
+            },
+            "scope": 6180,
+            "src": "106:67:14",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "6a474002",
+            "id": 6167,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawDividend",
+            "nameLocation": "184:16:14",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 6165,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "200:2:14"
+            },
+            "returnParameters": {
+              "id": 6166,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "211:0:14"
+            },
+            "scope": 6180,
+            "src": "175:37:14",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "anonymous": false,
+            "eventSelector": "a493a9229478c3fcd73f66d2cdeb7f94fd0f341da924d1054236d78454116511",
+            "id": 6173,
+            "name": "DividendsDistributed",
+            "nameLocation": "222:20:14",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 6172,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 6169,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "from",
+                  "nameLocation": "261:4:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 6173,
+                  "src": "245:20:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 6168,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "245:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 6171,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "weiAmount",
+                  "nameLocation": "276:9:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 6173,
+                  "src": "268:17:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 6170,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "268:7:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "242:46:14"
+            },
+            "src": "216:73:14"
+          },
+          {
+            "anonymous": false,
+            "eventSelector": "ee503bee2bb6a87e57bc57db795f98137327401a0e7b7ce42e37926cc1a9ca4d",
+            "id": 6179,
+            "name": "DividendWithdrawn",
+            "nameLocation": "297:17:14",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 6178,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 6175,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "to",
+                  "nameLocation": "333:2:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 6179,
+                  "src": "317:18:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 6174,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "317:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 6177,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "weiAmount",
+                  "nameLocation": "346:9:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 6179,
+                  "src": "338:17:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 6176,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "338:7:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "314:44:14"
+            },
+            "src": "291:68:14"
+          }
+        ],
+        "scope": 6181,
+        "src": "64:297:14",
+        "usedErrors": []
+      }
+    ],
+    "src": "39:323:14"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.19+commit.7dd6d404.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.10",
+  "updatedAt": "2023-05-05T14:39:20.356Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
