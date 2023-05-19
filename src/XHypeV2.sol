@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.19;
+pragma solidity 0.8.17;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -11,49 +11,51 @@ import "./AbstractDividends.sol";
 
 contract XhypeV2 is ERC20, AbstractDividends, Ownable {
     event ExcludeFromFees(address indexed account, bool isExcluded);
+    event ExcludeFromDividends(address indexed account, bool isExcluded);
     event UpdateBuyFee(uint buyFee);
     event UpdateSellFee(uint sellFee);
     
-    event SetAutomatedMarketMakerPair(address indexed pair, bool indexed value);
     event UpdateUniswapV2Router(address indexed newAddress,address indexed oldAddress);
     event SendDividends(uint amount);
 
     using Address for address;
     using Address for address payable;
 
+    //FEES VARIABLES
     uint public buyFee = 5;
     uint public sellFee = 8;
-        
-    uint public minBalanceForDividends = 1000 ether;
+    uint private constant MAX_FEE = 15; //15%    
+    
+
+    address public immutable rewardToken;
     uint private _totalSupply = 1000000000 ether;
+    address private DEAD = 0x000000000000000000000000000000000000dEaD;
 
-    uint private startDate;
-
+    //SWAPPING VARIABLES
     IUniswapV2Router02 public uniswapV2Router;
     address public uniswapV2Pair;
-
-    address private DEAD = 0x000000000000000000000000000000000000dEaD;
 
     uint public swapTokensAtAmount;
     bool public swapEnabled;    
     bool private swapping;
 
+    //DIVIDENDS VARIABLES
+    uint public minBalanceForDividends = 1000 ether;
+    uint private startDate;
     mapping(address => bool) private _isExcludedFromDividends;
     address[] private _excludedFromDividends;
     mapping(address => bool) private _isExcludedFromFees;
-    mapping(address => bool) private automatedMarketMakerPairs;
 
+    //VESTING VARIABLES
     //User/wallet => vested amount
     mapping(address => uint) private threeMonthVestedWallets;
     mapping(address => uint) private twelveMonthVestedWallets;
     mapping(address => uint) private twentyFourMonthVestedWallets;
     mapping(address => bool) private sixMonthLockedWallets;
+    mapping(address => bool) private isVested;
     //User/wallet => withdrawn amount
-    mapping(address => uint) private vestedWalletsWithdrawn;
+    mapping(address => uint) public vestedWalletsWithdrawn;
 
-    address public immutable rewardToken;
-
-    uint private constant MAX_FEE = 15; //15%
     
     bool private nukeTheWhales = false;
     mapping (address => uint256) public previousSale;
@@ -74,28 +76,40 @@ contract XhypeV2 is ERC20, AbstractDividends, Ownable {
 
         uniswapV2Router = _uniswapV2Router;
         uniswapV2Pair = _uniswapV2Pair;
-        
-        _setAutomatedMarketMakerPair(_uniswapV2Pair, true);
 
-        _isExcludedFromDividends[owner()];
-        _isExcludedFromDividends[address(this)];
-        _isExcludedFromDividends[DEAD];
-        _isExcludedFromDividends[address(_uniswapV2Router)];
-        _isExcludedFromDividends[address(0x4aEb644A9a035e5E0b354EA4b463D1c0E8E79CF9)]; //Advisors
-        _isExcludedFromDividends[address(0x3aB47F80a046d2A4D92A5c229fe93fA6708aEB13)]; //Treasury
-        _isExcludedFromDividends[address(0x1767c992C70AB29fBE9194f4D8160C373B6d7ED8)]; //Marketing
-        _isExcludedFromDividends[address(0xe24bfB419f5C0EDa8660d53452212cf0c87E4151)]; //Team
-        _isExcludedFromDividends[address(0xF949709F80dec4d9E2420c0e6a98081F13fFf368)]; //DEXES
-        _isExcludedFromDividends[address(0x9DBe36b089451aAEfF495824BB507eD0902f5644)]; //Future Developments
-        _isExcludedFromDividends[address(0xaD064A0827214234E228B9213Af52E5e6457e4C0)]; //Charity Wallet
-        _isExcludedFromDividends[address(0x4f931e269402Cfa2cB998EF3402c7897DA7bd1db)]; //Burning Pool
+        _isExcludedFromDividends[owner()] = true;
+        _excludedFromDividends.push(owner());
+        _isExcludedFromDividends[address(this)] = true;
+        _excludedFromDividends.push(address(this));
+        _isExcludedFromDividends[DEAD] = true;
+        _excludedFromDividends.push(DEAD);
+        _isExcludedFromDividends[address(_uniswapV2Pair)] = true;
+        _excludedFromDividends.push(address(_uniswapV2Pair));
+        _isExcludedFromDividends[address(_uniswapV2Router)] = true;
+        _excludedFromDividends.push(address(_uniswapV2Router));
+        _isExcludedFromDividends[address(0x4aEb644A9a035e5E0b354EA4b463D1c0E8E79CF9)] = true; //Advisors
+        _excludedFromDividends.push(address(0x4aEb644A9a035e5E0b354EA4b463D1c0E8E79CF9));
+        _isExcludedFromDividends[address(0x3aB47F80a046d2A4D92A5c229fe93fA6708aEB13)] = true; //Treasury
+        _excludedFromDividends.push(address(0x3aB47F80a046d2A4D92A5c229fe93fA6708aEB13));
+        _isExcludedFromDividends[address(0x1767c992C70AB29fBE9194f4D8160C373B6d7ED8)] = true; //Marketing
+        _excludedFromDividends.push(address(0x1767c992C70AB29fBE9194f4D8160C373B6d7ED8));
+        _isExcludedFromDividends[address(0xe24bfB419f5C0EDa8660d53452212cf0c87E4151)] = true; //Team
+        _excludedFromDividends.push(address(0xe24bfB419f5C0EDa8660d53452212cf0c87E4151));
+        _isExcludedFromDividends[address(0xF949709F80dec4d9E2420c0e6a98081F13fFf368)] = true; //DEXES
+        _excludedFromDividends.push(address(0xF949709F80dec4d9E2420c0e6a98081F13fFf368));
+        _isExcludedFromDividends[address(0x9DBe36b089451aAEfF495824BB507eD0902f5644)] = true; //Future Developments
+        _excludedFromDividends.push(address(0x9DBe36b089451aAEfF495824BB507eD0902f5644));
+        _isExcludedFromDividends[address(0xaD064A0827214234E228B9213Af52E5e6457e4C0)] = true; //Charity Wallet
+        _excludedFromDividends.push(address(0xaD064A0827214234E228B9213Af52E5e6457e4C0));
+        _isExcludedFromDividends[address(0x4f931e269402Cfa2cB998EF3402c7897DA7bd1db)] = true; //Burning Pool
+        _excludedFromDividends.push(address(0x4f931e269402Cfa2cB998EF3402c7897DA7bd1db));
 
         _isExcludedFromFees[owner()] = true;
         _isExcludedFromFees[address(this)] = true;
         _isExcludedFromFees[DEAD] = true;
 
         swapEnabled = true;
-        swapTokensAtAmount = (totalSupply()) / 5000;
+        swapTokensAtAmount = 10000 ether; //10K
         _mint(owner(), totalSupply());
     }
 
@@ -119,20 +133,6 @@ contract XhypeV2 is ERC20, AbstractDividends, Ownable {
         return totalSupply() - excludedSupply;
     }
 
-    receive() external payable {}
-
-    function claimStuckTokens(address token) external onlyOwner {
-        require(token != address(this), "Owner cannot claim native tokens");
-        require(token != rewardToken, "Owner cannot claim rewards tokens");
-        if (token == address(0x0)) {
-            payable(msg.sender).transfer(address(this).balance);
-            return;
-        }
-        IERC20 ERC20token = IERC20(token);
-        uint balance = ERC20token.balanceOf(address(this));
-        TransferHelper.safeTransfer(token, msg.sender, balance);        
-    }
-
     function updateUniswapV2Router(address newAddress) external onlyOwner {
         require(newAddress != address(uniswapV2Router),"The router already has that address");
         emit UpdateUniswapV2Router(newAddress, address(uniswapV2Router));
@@ -142,26 +142,13 @@ contract XhypeV2 is ERC20, AbstractDividends, Ownable {
         uniswapV2Pair = _uniswapV2Pair;
     }
 
-    function setAutomatedMarketMakerPair(address pair,bool value) external onlyOwner {
-        require(pair != uniswapV2Pair,"The PancakeSwap pair cannot be removed from automatedMarketMakerPairs");
-        _setAutomatedMarketMakerPair(pair, value);
-    }
-
-    function _setAutomatedMarketMakerPair(address pair, bool value) private {
-        require(automatedMarketMakerPairs[pair] != value,"Automated market maker pair is already set to that value");
-        automatedMarketMakerPairs[pair] = value;
-        _isExcludedFromDividends[pair] = value;        
-
-        emit SetAutomatedMarketMakerPair(pair, value);
-    }
-
     function setMinBalanceForDividends(uint amount) external onlyOwner {
         require(amount > 0,"Amount must be bigger than 0");
         minBalanceForDividends = amount;
     }
 
     function setStartDate(uint _startDate) external onlyOwner {
-        require(startDate > 0,"Start date can be setted only once");
+        require(startDate == 0,"Start date can be setted only once");
         require(_startDate > block.timestamp,"Start date must be in the future");
         startDate = _startDate;
     }
@@ -196,6 +183,25 @@ contract XhypeV2 is ERC20, AbstractDividends, Ownable {
         emit UpdateSellFee(_newFee);
     }
 
+    function excludeFromDividends(address account) external onlyOwner() {
+        require(!_isExcludedFromDividends[account], "Account is already excluded");
+        
+        _isExcludedFromDividends[account] = true;
+        _excludedFromDividends.push(account);
+    }
+
+    function includeInDividends(address account) external onlyOwner() {
+        require(_isExcludedFromDividends[account], "Account is already included");
+        for (uint256 i = 0; i < _excludedFromDividends.length; i++){
+            if (_excludedFromDividends[i] == account) {
+                _excludedFromDividends[i] = _excludedFromDividends[_excludedFromDividends.length - 1];
+                _isExcludedFromDividends[account] = false;
+                _excludedFromDividends.pop();
+                break;
+            }
+        }
+    }
+
     function _transfer(
         address from,
         address to,
@@ -203,18 +209,18 @@ contract XhypeV2 is ERC20, AbstractDividends, Ownable {
     ) internal override {
         require(from != address(0), "ERC20: transfer from the zero address");
         require(to != address(0), "ERC20: transfer to the zero address");
-
+        
         if (amount == 0) {
             super._transfer(from, to, 0);
             return;
         }
         
-        if (nukeTheWhales) {            
+        if (nukeTheWhales) {
             if(from != owner() && to != owner()) {
-                require(amount <= (totalSupply()) * (1) / (10**3), "Transfer amount exceeds the 0.1% of the supply.");
+                require(amount <= (totalSupply()) * (5) / (10**3), "Transfer amount exceeds the 0.5% of the supply.");
             }
 
-            if(to == address(uniswapV2Pair) || to == address(uniswapV2Router)) { 
+            if(to == address(uniswapV2Pair) || to == address(uniswapV2Router)) {
                 uint256 fromBalance = balanceOf(from);
                 uint256 threshold = (totalSupply()) * (5) / (10**3);
  
@@ -230,17 +236,10 @@ contract XhypeV2 is ERC20, AbstractDividends, Ownable {
 
         bool canSwap = contractTokenBalance >= swapTokensAtAmount;
 
-        if (swapEnabled && canSwap && !swapping &&
-            !automatedMarketMakerPairs[from] && buyFee + sellFee > 0
-        ) {
+        if (swapEnabled && canSwap && !swapping) {
             swapping = true;
             
-            uint rewardShare = buyFee + sellFee;
-
-            if (contractTokenBalance > 0 && rewardShare > 0) {
-                uint rewards = (contractTokenBalance * rewardShare) / 100;
-                swapAndSendDividends(rewards);
-            }
+            swapAndSendDividends(contractTokenBalance);
 
             swapping = false;
         }
@@ -256,14 +255,14 @@ contract XhypeV2 is ERC20, AbstractDividends, Ownable {
         }
 
         if (takeFee) {
-            uint _totalFees;
+            uint _fees;
             if (from == uniswapV2Pair) {
-                _totalFees = buyFee;
+                _fees = buyFee;
             } else {
-                _totalFees = sellFee;
+                _fees = sellFee;
                 previousSale[from] = block.timestamp;
             }
-            uint fees = (amount * _totalFees) / 100;
+            uint fees = (amount * _fees) / 100;
 
             amount = amount - fees;
 
@@ -274,16 +273,12 @@ contract XhypeV2 is ERC20, AbstractDividends, Ownable {
     }
 
     //=======Swap=======//
-    function setSwapEnabled(bool _swapEnabled) external onlyOwner {
-        require(swapEnabled != _swapEnabled,"Swap is already set to that state");
-        swapEnabled = _swapEnabled;
+    function toggleSwapEnabled() external onlyOwner {        
+        swapEnabled = !swapEnabled;
     }
 
     function setSwapTokensAtAmount(uint newAmount) external onlyOwner {
-        require(
-            newAmount > totalSupply() / 1000000,
-            "New Amount must be more than 0.0001% of total supply"
-        );
+        require(newAmount > totalSupply() / 1000000, "New Amount must be more than 0.0001% of total supply");
         swapTokensAtAmount = newAmount;
     }
 
@@ -314,7 +309,7 @@ contract XhypeV2 is ERC20, AbstractDividends, Ownable {
         path[0] = uniswapV2Router.WETH();
         path[1] = address(rewardToken);
 
-        uint balanceRewardToken = IERC20(rewardToken).balanceOf(address(this));
+        uint initialBalance = IERC20(rewardToken).balanceOf(address(this));
 
         _approve(address(this), address(uniswapV2Router), amount);
 
@@ -326,7 +321,7 @@ contract XhypeV2 is ERC20, AbstractDividends, Ownable {
             block.timestamp
         );
 
-        uint amountToDistribute = IERC20(rewardToken).balanceOf(address(this)) - balanceRewardToken;
+        uint amountToDistribute = IERC20(rewardToken).balanceOf(address(this)) - initialBalance;
 
         _distributeDividends(amountToDistribute);
         emit SendDividends(amountToDistribute);
@@ -335,6 +330,7 @@ contract XhypeV2 is ERC20, AbstractDividends, Ownable {
     function setVestedWallet(address account, uint amount, uint vestingTime, bool sixMonthLock) external onlyOwner {
         require(vestingTime == 3 || vestingTime == 12 || vestingTime == 24, "Vesting time not allowed");
         require(balanceOf(account) == 0,"Can't vest account with balance");
+        require(!isVested[account],"Wallet is already vested");
 
         if (vestingTime == 3){
             threeMonthVestedWallets[account] = amount;
@@ -345,7 +341,8 @@ contract XhypeV2 is ERC20, AbstractDividends, Ownable {
             if (sixMonthLock){
                 sixMonthLockedWallets[account] = true;
             }
-        }        
+        }
+        isVested[account] = true;
     }
 
     function _beforeTokenTransfer(
@@ -353,40 +350,62 @@ contract XhypeV2 is ERC20, AbstractDividends, Ownable {
         address to,
         uint256 amount
     ) internal override view {
-        //If wallet balance is vested
+        if (sixMonthLockedWallets[from]){
+            require(block.timestamp >= startDate + 180 days,"Lock period not over"); //6 month lock
+        }
         if (twentyFourMonthVestedWallets[from] > 0){
-            if (sixMonthLockedWallets[from]){
-                require(block.timestamp >= startDate + 183 days,"Vesting period not over"); //6 month lock
-            }
-            uint availableAmount = getAvailableAmount(twentyFourMonthVestedWallets[from], 730, true);//24 month linear release - 6 month lock            
-            require(amount <= availableAmount - vestedWalletsWithdrawn[from],"Can't use more than unvested amount");
+            uint unvestedAmount = getUnvestedAmount(twentyFourMonthVestedWallets[from], 730 days, sixMonthLockedWallets[from]);//24 month linear release            
+            require(amount <= unvestedAmount - vestedWalletsWithdrawn[from],"Can't use more than unvested amount");
         }else if (twelveMonthVestedWallets[from] > 0){
-            uint availableAmount = getAvailableAmount(twelveMonthVestedWallets[from], 365, false);//12 month linear release
-            require(amount <= availableAmount - vestedWalletsWithdrawn[from],"Can't use more than unvested amount");
+            uint unvestedAmount = getUnvestedAmount(twelveMonthVestedWallets[from], 365 days, sixMonthLockedWallets[from]);//12 month linear release
+            require(amount <= unvestedAmount - vestedWalletsWithdrawn[from],"Can't use more than unvested amount");
         }else if (threeMonthVestedWallets[from] > 0){
-            uint availableAmount = getAvailableAmount(threeMonthVestedWallets[from], 90, false);//3 month linear release
-            require(amount <= availableAmount - vestedWalletsWithdrawn[from],"Can't use more than unvested amount");
+            uint unvestedAmount = getUnvestedAmount(threeMonthVestedWallets[from], 90 days, sixMonthLockedWallets[from]);//3 month linear release
+            require(amount <= unvestedAmount - vestedWalletsWithdrawn[from],"Can't use more than unvested amount");
         }
     }
 
-    function getAvailableAmount(uint totalVestedAmount, uint vestingTime, bool sixMonthLocked) internal view returns(uint){
-        uint availableAmountPerDay = totalVestedAmount / vestingTime;
-        uint daysPassed = block.timestamp - (startDate + (sixMonthLocked ? 180 days : 0));
+    function getVestedWalletWithdrawn(address wallet) external view returns(uint){
+        return vestedWalletsWithdrawn[wallet];
+    }
 
-        return daysPassed * availableAmountPerDay;
+    function getUnvestedAmount(uint totalVestedAmount, uint vestingTime, bool sixMonthLocked) public view returns(uint){
+        require(vestingTime > 0,"Can't divide by zero");
+        if (startDate + vestingTime <= block.timestamp){
+            return totalVestedAmount;
+        }
+        uint availableAmountPerDay = totalVestedAmount / vestingTime;
+        uint timePassed = block.timestamp - (startDate + (sixMonthLocked ? 180 days : 0));
+
+        return timePassed * availableAmountPerDay;
     }
 
     function _afterTokenTransfer(address from, address to, uint256 amount) internal override{
-        if (twentyFourMonthVestedWallets[from] > 0 ||
-            twelveMonthVestedWallets[from] > 0 ||
-            threeMonthVestedWallets[from] > 0 ){
+        if (isVested[from]){
             vestedWalletsWithdrawn[from] += amount;
         }
+       
+    }
+
+    function withdrawDividends() external{
+        uint256 amount = _prepareCollect(msg.sender);
+        require(amount > 0, "Nothing to withdraw");
+        TransferHelper.safeTransfer(rewardToken, msg.sender, amount);
     }
 
     function withdrawBalance(address receiver) external onlyOwner{
         require(address(this).balance > 0,"Nothing to withdraw");
-
         TransferHelper.safeTransferETH(receiver, address(this).balance);
+    }
+
+    receive() external payable {}
+
+    function claimStuckTokens(address token) external onlyOwner {
+        require(token != address(this), "Owner cannot claim native tokens");
+        require(token != rewardToken, "Owner cannot claim rewards tokens");
+
+        IERC20 ERC20token = IERC20(token);
+        uint balance = ERC20token.balanceOf(address(this));
+        TransferHelper.safeTransfer(token, msg.sender, balance);        
     }
 }

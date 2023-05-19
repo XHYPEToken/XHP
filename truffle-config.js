@@ -8,8 +8,8 @@ module.exports = {
   contracts_build_directory: path.join(__dirname, "compiledContracts"),
   networks: {
     development: {
-    port: 7545,
-    network_id: "5777",
+    port: 8545,
+    network_id: "1684494096376",
     host: "127.0.0.1"
     },
     mumbai: {
@@ -20,12 +20,18 @@ module.exports = {
     },
     local: {
       provider: function() {
-          return new HDWalletProvider(process.env.MNEMONIC, "http://127.0.0.1:7545", AccountIndex)
+          return new HDWalletProvider(process.env.MNEMONIC, "http://127.0.0.1:8545", AccountIndex)
       },
       network_id: "5777",
       gas: 5500000,       
       gasPrice: "25000000000",      
-    },    
+    },
+    bscTestnet: {
+      provider: function() {
+          return new HDWalletProvider(process.env.MNEMONICTEST, "https://data-seed-prebsc-1-s1.binance.org:8545", AccountIndex)
+      },
+      network_id: "97"      
+    },
     polygon: {
       provider: () => new HDWalletProvider({
         mnemonic: {
@@ -60,7 +66,7 @@ module.exports = {
   },
   compilers: {
     solc: {
-    version: "0.8.19"
+    version: "0.8.17"
     }
   },
   settings: {
