@@ -2,20 +2,20 @@
 pragma solidity 0.8.17;
 
 import "lib/forge-std/src/Test.sol";
-import "../src/XHypeV2.sol";
+import "../src/XHype.sol";
 import "../src/mocks/Token.sol";
 
 contract XHPTest is Test {
     
     Token public usdt;
-    XhypeV2 public token;
+    XHype public token;
 
     uint startDate = 100;
 
     function setUp() public {
         usdt = new Token();
-        token = new XhypeV2(address(usdt),vm.addr(22));
-        token.setStartDate(startDate);
+        token = new XHype(address(usdt),vm.addr(22));
+        token.setStartVestingDate(startDate);
         vm.warp(startDate);
     }
 
@@ -32,13 +32,18 @@ contract XHPTest is Test {
     }
 
     function testVestings() public {
+        //Unvested wallet, fully available from the begining
+        token.transfer(vm.addr(5),90 ether);
+        assertEq(token.getAvailableAmount(vm.addr(5)),90 ether);
+        assertEq(token.getAvailableAmount(vm.addr(5)),token.balanceOf(vm.addr(5)));
+
         setVestings();
         //Vesting 1: 3 meses linear release
         vm.prank(vm.addr(1));
-        vm.expectRevert("Can't use more than unvested amount");
+        vm.expectRevert("Can't use more than available amount");
         token.transfer(address(1),1 ether);
 
-        vm.warp(startDate + 86401);
+        vm.warp(startDate + 1 days + 1);
         
         vm.prank(vm.addr(1));
         token.transfer(address(1),1 ether);
@@ -46,20 +51,24 @@ contract XHPTest is Test {
 
         vm.warp(startDate + 2 days + 1);
         vm.prank(vm.addr(1));
-        vm.expectRevert("Can't use more than unvested amount");
+        vm.expectRevert("Can't use more than available amount");
         token.transfer(address(1),2 ether);
-        assertEq(token.balanceOf(address(1)), 1 ether);
+        assertEq(token.balanceOf(address(1)), 1 ether);        
         
         vm.warp(startDate + 91 days);
-        assertEq(token.getUnvestedAmount(90 ether, 90 days, false),90 ether);
+        assertEq(token.getAvailableAmount(vm.addr(1)),89 ether);
         assertEq(token.getVestedWalletWithdrawn(vm.addr(1)),1 ether);
 
         vm.prank(vm.addr(1));
         token.transfer(address(1),89 ether);
         assertEq(token.balanceOf(address(1)), 90 ether);
 
+        token.transfer(vm.addr(1),100 ether);
+        assertEq(token.getAvailableAmount(vm.addr(1)),100 ether);
+
+        assertEq(token.getAvailableAmount(vm.addr(4)),0);
         vm.prank(vm.addr(4));
-        vm.expectRevert("Lock period not over");
+        vm.expectRevert("Can't use more than available amount");
         token.transfer(address(1),1 ether);
 
         vm.warp(startDate + 182 days);

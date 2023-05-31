@@ -1,5 +1,5 @@
 let RewardToken = artifacts.require("./mocks/Token.sol");
-let XHP = artifacts.require("./XHypeV2.sol");
+let XHP = artifacts.require("./XHype.sol");
 let pancakeRouter = "0xD99D1c33F9fC3444f8101754aBC46c52416550D1"; //BSC Testnet
   
 module.exports = async (deployer, accounts) => {
