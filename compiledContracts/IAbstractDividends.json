@@ -111,15 +111,15 @@
     "absolutePath": "project:/src/interfaces/IAbstractDividends.sol",
     "exportedSymbols": {
       "IAbstractDividends": [
-        3947
+        3871
       ]
     },
-    "id": 3948,
+    "id": 3872,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3908,
+        "id": 3832,
         "literals": [
           "solidity",
           "0.8",
@@ -135,9 +135,9 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 3947,
+        "id": 3871,
         "linearizedBaseContracts": [
-          3947
+          3871
         ],
         "name": "IAbstractDividends",
         "nameLocation": "68:18:13",
@@ -145,13 +145,13 @@
         "nodes": [
           {
             "documentation": {
-              "id": 3909,
+              "id": 3833,
               "nodeType": "StructuredDocumentation",
               "src": "90:215:13",
               "text": " @dev Returns the total amount of dividends a given address is able to withdraw.\n @param account Address of a dividend recipient\n @return A uint256 representing the dividends `account` can withdraw"
             },
             "functionSelector": "b131e610",
-            "id": 3916,
+            "id": 3840,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -159,17 +159,17 @@
             "nameLocation": "316:23:13",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3912,
+              "id": 3836,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3911,
+                  "id": 3835,
                   "mutability": "mutable",
                   "name": "account",
                   "nameLocation": "348:7:13",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3916,
+                  "scope": 3840,
                   "src": "340:15:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -178,7 +178,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3910,
+                    "id": 3834,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "340:7:13",
@@ -194,17 +194,17 @@
               "src": "339:17:13"
             },
             "returnParameters": {
-              "id": 3915,
+              "id": 3839,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3914,
+                  "id": 3838,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3916,
+                  "scope": 3840,
                   "src": "380:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -213,7 +213,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3913,
+                    "id": 3837,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "380:7:13",
@@ -227,7 +227,7 @@
               ],
               "src": "379:9:13"
             },
-            "scope": 3947,
+            "scope": 3871,
             "src": "307:82:13",
             "stateMutability": "view",
             "virtual": false,
@@ -235,13 +235,13 @@
           },
           {
             "documentation": {
-              "id": 3917,
+              "id": 3841,
               "nodeType": "StructuredDocumentation",
               "src": "393:185:13",
               "text": " @dev View the amount of funds that an address has withdrawn.\n @param account The address of a token holder.\n @return The amount of funds that `account` has withdrawn."
             },
             "functionSelector": "53f83ad7",
-            "id": 3924,
+            "id": 3848,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -249,17 +249,17 @@
             "nameLocation": "589:20:13",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3920,
+              "id": 3844,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3919,
+                  "id": 3843,
                   "mutability": "mutable",
                   "name": "account",
                   "nameLocation": "618:7:13",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3924,
+                  "scope": 3848,
                   "src": "610:15:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -268,7 +268,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3918,
+                    "id": 3842,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "610:7:13",
@@ -284,17 +284,17 @@
               "src": "609:17:13"
             },
             "returnParameters": {
-              "id": 3923,
+              "id": 3847,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3922,
+                  "id": 3846,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3924,
+                  "scope": 3848,
                   "src": "650:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -303,7 +303,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3921,
+                    "id": 3845,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "650:7:13",
@@ -317,7 +317,7 @@
               ],
               "src": "649:9:13"
             },
-            "scope": 3947,
+            "scope": 3871,
             "src": "580:79:13",
             "stateMutability": "view",
             "virtual": false,
@@ -325,13 +325,13 @@
           },
           {
             "documentation": {
-              "id": 3925,
+              "id": 3849,
               "nodeType": "StructuredDocumentation",
               "src": "662:389:13",
               "text": " @dev View the amount of funds that an address has earned in total.\n accumulativeFundsOf(account) = withdrawableDividendsOf(account) + withdrawnDividendsOf(account)\n = (pointsPerShare * balanceOf(account) + pointsCorrection[account]) / POINTS_MULTIPLIER\n @param account The address of a token holder.\n @return The amount of funds that `account` has earned in total."
             },
             "functionSelector": "1a60b63d",
-            "id": 3932,
+            "id": 3856,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -339,17 +339,17 @@
             "nameLocation": "1062:21:13",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3928,
+              "id": 3852,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3927,
+                  "id": 3851,
                   "mutability": "mutable",
                   "name": "account",
                   "nameLocation": "1092:7:13",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3932,
+                  "scope": 3856,
                   "src": "1084:15:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -358,7 +358,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3926,
+                    "id": 3850,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1084:7:13",
@@ -374,17 +374,17 @@
               "src": "1083:17:13"
             },
             "returnParameters": {
-              "id": 3931,
+              "id": 3855,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3930,
+                  "id": 3854,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3932,
+                  "scope": 3856,
                   "src": "1124:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -393,7 +393,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3929,
+                    "id": 3853,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1124:7:13",
@@ -407,7 +407,7 @@
               ],
               "src": "1123:9:13"
             },
-            "scope": 3947,
+            "scope": 3871,
             "src": "1053:80:13",
             "stateMutability": "view",
             "virtual": false,
@@ -416,29 +416,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 3933,
+              "id": 3857,
               "nodeType": "StructuredDocumentation",
               "src": "1136:205:13",
               "text": " @dev This event emits when new funds are distributed\n @param by the address of the sender who distributed funds\n @param dividendsDistributed the amount of funds received for distribution"
             },
             "eventSelector": "a493a9229478c3fcd73f66d2cdeb7f94fd0f341da924d1054236d78454116511",
-            "id": 3939,
+            "id": 3863,
             "name": "DividendsDistributed",
             "nameLocation": "1349:20:13",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3938,
+              "id": 3862,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3935,
+                  "id": 3859,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "by",
                   "nameLocation": "1386:2:13",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3939,
+                  "scope": 3863,
                   "src": "1370:18:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -447,7 +447,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3934,
+                    "id": 3858,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1370:7:13",
@@ -461,13 +461,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3937,
+                  "id": 3861,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "dividendsDistributed",
                   "nameLocation": "1398:20:13",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3939,
+                  "scope": 3863,
                   "src": "1390:28:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -476,7 +476,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3936,
+                    "id": 3860,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1390:7:13",
@@ -495,29 +495,29 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 3940,
+              "id": 3864,
               "nodeType": "StructuredDocumentation",
               "src": "1423:207:13",
               "text": " @dev This event emits when distributed funds are withdrawn by a token holder.\n @param by the address of the receiver of funds\n @param fundsWithdrawn the amount of funds that were withdrawn"
             },
             "eventSelector": "08d688a92fc311df9b853769e8a99b320411042a86f106fd29e7f21ee06e79da",
-            "id": 3946,
+            "id": 3870,
             "name": "DividendsWithdrawn",
             "nameLocation": "1638:18:13",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3945,
+              "id": 3869,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3942,
+                  "id": 3866,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "by",
                   "nameLocation": "1673:2:13",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3946,
+                  "scope": 3870,
                   "src": "1657:18:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -526,7 +526,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3941,
+                    "id": 3865,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1657:7:13",
@@ -540,13 +540,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3944,
+                  "id": 3868,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "fundsWithdrawn",
                   "nameLocation": "1685:14:13",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3946,
+                  "scope": 3870,
                   "src": "1677:22:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -555,7 +555,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3943,
+                    "id": 3867,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1677:7:13",
@@ -572,7 +572,7 @@
             "src": "1632:69:13"
           }
         ],
-        "scope": 3948,
+        "scope": 3872,
         "src": "58:1645:13",
         "usedErrors": []
       }
@@ -585,7 +585,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.10",
-  "updatedAt": "2023-06-29T13:35:21.308Z",
+  "updatedAt": "2023-06-29T14:04:32.102Z",
   "devdoc": {
     "events": {
       "DividendsDistributed(address,uint256)": {
