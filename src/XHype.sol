@@ -26,7 +26,7 @@ contract XHype is ERC20, AbstractDividends, Ownable {
 
     address public immutable rewardToken;
     uint private _totalSupply = 1000000000 ether;
-    address private DEAD = 0x000000000000000000000000000000000000dEaD;
+    address private constant DEAD = 0x000000000000000000000000000000000000dEaD;
 
     //SWAPPING VARIABLES
     IUniswapV2Router02 public uniswapV2Router;
@@ -59,17 +59,14 @@ contract XHype is ERC20, AbstractDividends, Ownable {
     mapping (address => uint256) public previousSale;
     uint private transferPercentageAllowed = 5;
 
-    constructor(
-        address _rewardToken,
-        address router
-    )
+    constructor()
         payable
         ERC20("XHype", "XHP")
         AbstractDividends(getSharesOf, totalShareableSupply)
     {
-        rewardToken = _rewardToken;
+        rewardToken = address(0x55d398326f99059fF775485246999027B3197955); //USDT on BSC network
         
-        IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(router);
+        IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(address(0x10ED43C718714eb63d5aA57B78B54704E256024E)); //Pancakeswap Router on BSC
         address _uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory())
             .createPair(address(this), _uniswapV2Router.WETH());
 
@@ -136,13 +133,17 @@ contract XHype is ERC20, AbstractDividends, Ownable {
         require(newAddress != address(uniswapV2Router),"The router already has that address");
         emit UpdateUniswapV2Router(newAddress);
         uniswapV2Router = IUniswapV2Router02(newAddress);
-        address _uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory())
-            .createPair(address(this), uniswapV2Router.WETH());
-        uniswapV2Pair = _uniswapV2Pair;
+        if (IUniswapV2Factory(uniswapV2Router.factory()).getPair(address(this), uniswapV2Router.WETH()) == address(0)){
+            address _uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory())
+                .createPair(address(this), uniswapV2Router.WETH());
+            uniswapV2Pair = _uniswapV2Pair;
+        }else{
+            uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory()).getPair(address(this), uniswapV2Router.WETH());
+        }
     }
 
     function setMinBalanceForDividends(uint amount) external onlyOwner {
-        require(amount > 0,"Can't be 0");
+        require(amount > 0 && amount <= 1000000 ether,"Must be between 0 and 1000000");
         minBalanceForDividends = amount;
     }
 
@@ -156,6 +157,10 @@ contract XHype is ERC20, AbstractDividends, Ownable {
         require (_percentage > 0,"Percentage can't be 0");
         require (_percentage <= 1000,"Percentage can't be more than 1000");
         transferPercentageAllowed = _percentage;
+    }
+
+    function setExcludeFromNukeTheWhales(address user, bool excluded) external onlyOwner{
+        excludedFromNukeTheWhales[user] = excluded;
     }
 
     function startNukingTheWhales() external onlyOwner {

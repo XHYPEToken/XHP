@@ -31,8 +31,7 @@ abstract contract AbstractDividends is IAbstractDividends {
   function() view returns (uint256) private immutable getTotalShares;
 
 /* ========  Storage  ======== */
-  uint256 public pointsPerShare;
-  mapping(address => int256) internal pointsCorrection;
+  uint256 public pointsPerShare;  
   mapping(address => uint256) private withdrawnDividends;
 
   constructor(
@@ -65,16 +64,13 @@ abstract contract AbstractDividends is IAbstractDividends {
   /**
    * @notice View the amount of dividends that an address has earned in total.
    * @dev accumulativeFundsOf(account) = withdrawableDividendsOf(account) + withdrawnDividendsOf(account)
-   * = (pointsPerShare * balanceOf(account) + pointsCorrection[account]) / POINTS_MULTIPLIER
+   * = (pointsPerShare * balanceOf(account)) / POINTS_MULTIPLIER
    * @param account The address of a token holder.
    * @return The amount of dividends that `account` has earned in total.
    */
   function cumulativeDividendsOf(address account) public view override returns (uint256) {
     return pointsPerShare
-      .mul(getSharesOf(account))
-      .toInt256()
-      .add(pointsCorrection[account])
-      .toUint256() / POINTS_MULTIPLIER;
+      .mul(getSharesOf(account)) / POINTS_MULTIPLIER;
   }
 
 /* ========  Dividend Utility Functions  ======== */
@@ -113,20 +109,5 @@ abstract contract AbstractDividends is IAbstractDividends {
       emit DividendsWithdrawn(account, _withdrawableDividend);
     }
     return _withdrawableDividend;
-  }
-
-  function _correctPointsForTransfer(address from, address to, uint256 shares) internal {
-    int256 _magCorrection = pointsPerShare.mul(shares).toInt256();
-    pointsCorrection[from] = pointsCorrection[from].add(_magCorrection);
-    pointsCorrection[to] = pointsCorrection[to].sub(_magCorrection);
-  }
-
-  /**
-   * @dev Increases or decreases the points correction for `account` by
-   * `shares*pointsPerShare`.
-   */
-  function _correctPoints(address account, int256 shares) internal {
-    pointsCorrection[account] = pointsCorrection[account]
-      .add(shares.mul(int256(pointsPerShare)));
   }
 }
