@@ -48,7 +48,7 @@ contract XHype is ERC20, AbstractDividends, Ownable {
     mapping(address => uint) private threeMonthVestedWallets;
     mapping(address => uint) private twelveMonthVestedWallets;
     mapping(address => uint) private twentyFourMonthVestedWallets;
-    mapping(address => bool) private sixMonthLockedWallets;
+    mapping(address => uint) private lockedTime;
     mapping(address => bool) private isVested;
     //User/wallet => withdrawn amount
     mapping(address => uint) public vestedWalletsWithdrawn;
@@ -319,7 +319,7 @@ contract XHype is ERC20, AbstractDividends, Ownable {
     }
 
     //VESTING
-    function setVestedWallet(address account, uint amount, uint vestingTime, bool sixMonthLock) external onlyOwner {
+    function setVestedWallet(address account, uint amount, uint vestingTime, uint lockingTime) external onlyOwner {
         require(vestingTime == 3 || vestingTime == 12 || vestingTime == 24, "Vesting time not allowed");
         require(balanceOf(account) == 0,"Can't vest account with balance");
         require(!isVested[account],"Wallet is already vested");
@@ -331,7 +331,7 @@ contract XHype is ERC20, AbstractDividends, Ownable {
         }else{
             twentyFourMonthVestedWallets[account] = amount;
         }
-        sixMonthLockedWallets[account] = sixMonthLock;
+        lockedTime[account] = lockingTime;
         isVested[account] = true;
     }
 
@@ -345,16 +345,20 @@ contract XHype is ERC20, AbstractDividends, Ownable {
         }
     }
 
-    function getUnvestedAmount(address account,uint totalVestedAmount, uint vestingTime, bool sixMonthLocked) internal view returns(uint){
-        if (block.timestamp < (startVestingDate + (sixMonthLocked ? 180 days : 0))){
+    function getLockedTime(address account) external view returns(uint){
+        return lockedTime[account];
+    }
+
+    function getUnvestedAmount(address account,uint totalVestedAmount, uint vestingTime) internal view returns(uint){
+        if (block.timestamp < (startVestingDate + lockedTime[account])){
             return 0;
         }
-        if (startVestingDate + vestingTime + (sixMonthLockedWallets[account] ? 180 days : 0) <= block.timestamp){            
+        if (startVestingDate + vestingTime + (lockedTime[account]) <= block.timestamp){            
             return balanceOf(account);
         }
         
         uint availableAmountPerDay = totalVestedAmount / vestingTime;
-        uint timePassed = block.timestamp - (startVestingDate + (sixMonthLocked ? 180 days : 0));
+        uint timePassed = block.timestamp - (startVestingDate + lockedTime[account]);
 
         return (timePassed * availableAmountPerDay) - vestedWalletsWithdrawn[account];
     }
@@ -364,11 +368,11 @@ contract XHype is ERC20, AbstractDividends, Ownable {
             return balanceOf(from);
         }
         if (twentyFourMonthVestedWallets[from] > 0){            
-            return getUnvestedAmount(from, twentyFourMonthVestedWallets[from], 730 days, sixMonthLockedWallets[from]);//24 month linear release            
+            return getUnvestedAmount(from, twentyFourMonthVestedWallets[from], 730 days);//24 month linear release            
         }else if (twelveMonthVestedWallets[from] > 0){
-            return getUnvestedAmount(from, twelveMonthVestedWallets[from], 365 days, sixMonthLockedWallets[from]);//12 month linear release            
+            return getUnvestedAmount(from, twelveMonthVestedWallets[from], 365 days);//12 month linear release            
         }else if (threeMonthVestedWallets[from] > 0){
-            return getUnvestedAmount(from, threeMonthVestedWallets[from], 90 days, sixMonthLockedWallets[from]);//3 month linear release            
+            return getUnvestedAmount(from, threeMonthVestedWallets[from], 90 days);//3 month linear release            
         }
     }
 
