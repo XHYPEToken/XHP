@@ -1452,7 +1452,7 @@ contract XHype is ERC20, AbstractDividends, Ownable {
 
     constructor()
         payable
-        ERC20("XHype", "XHP")
+        ERC20("XHYPE", "XHP")
         AbstractDividends(getSharesOf, totalShareableSupply)
     {
         rewardToken = address(0x55d398326f99059fF775485246999027B3197955); //USDT on BSC network
